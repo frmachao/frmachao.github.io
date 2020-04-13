@@ -9,3 +9,4 @@
 [关于 Node 环境变量 process.env](https://github.com/frmachao/blog/issues/4)
 
 [在 TypeScript 中定义 Mongoose Model 的静态方法 Document 的实例方法](https://github.com/frmachao/blog/issues/5)
+[Promise 异步编程 学习笔记 1 ](https://github.com/frmachao/blog/issues/6)
