@@ -13,3 +13,5 @@
 [Promise 异步编程 学习笔记 1 ](https://github.com/frmachao/blog/issues/6)
 
 [Nginx学习笔记 1](https://github.com/frmachao/blog/issues/7)
+
+[记 gulp-imagemin 安装时遇到的问题](https://github.com/frmachao/blog/issues/8)
