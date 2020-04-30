@@ -11,6 +11,13 @@ const fetchData = () => {
         }, 500)
     })
 }
-fetchData()
-    .then(result => { console.log('result', result) })
-    .catch(err => { console.log('err', err) })
+const test = () => {
+    return fetchData()
+            .then(res =>111)
+            .catch(err=>err)
+}
+(async () => {
+    const [err, data] = await test().then(data => [null, data]).catch(err => [err, null])
+    console.log('data==', data)// err {name: "error", message: "出错"}
+    console.log('err==', err.message)// null
+})()

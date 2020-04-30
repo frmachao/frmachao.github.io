@@ -21,17 +21,18 @@ gulp.task('test', () => {
                     {
                         targets: {
                             // ie: 8,
-                            "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+                            // "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+                            "browsers": ["last 2 Chrome versions"]
                         },
-                        useBuiltIns: 'usage',
-                        corejs: { version: 3 }
+                        // useBuiltIns: 'usage',
+                        // corejs: { version: 3 }
                     }
                 ]
             ],
             plugins: [
                 // 避免在编译后的输出中重复代码 以及 避免全局变量污染
                 ["@babel/plugin-transform-runtime", {
-                    corejs: { version: 3, proposals: true }
+                    // corejs: { version: 3, proposals: true }
                 }]
             ],
             exclude: [/node_modules/],
