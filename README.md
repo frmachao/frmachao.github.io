@@ -17,3 +17,5 @@
 [记 gulp-imagemin 安装时遇到的问题](https://github.com/frmachao/blog/issues/8)
 
 [babel7 中 babel-plugin-transform-runtime 和 babel-preset-env](https://github.com/frmachao/blog/issues/9)
+
+[Mac OS 终端安装、使用 oh My zsh ](https://github.com/frmachao/blog/issues/10)
