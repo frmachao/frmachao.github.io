@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="frmachao">
+  <meta name="keywords" content="">
+  
+  <title>一个博客 - frmachao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"frmachao.top","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"4e9db9d1dd974fc34509a5c598033cea","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"GRh8dqRnhxkFl3vljLmgu9OU-gzGzoHsz","app_key":"F0tYf54R2Yb9hmohCo08A8l6","server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>frmachao's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="一个博客">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      frmachao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-03-20 18:24" pubdate>
+        2021年3月20日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+  <div class="container-fluid nopadding-x">
+    <div class="row nomargin-x">
+      <div class="d-none d-lg-block col-lg-2"></div>
+      <div class="col-lg-8 nopadding-x-md">
+        <div class="container nopadding-x-md" id="board-ctn">
+          <div class="py-5" id="board">
+            <article class="post-content mx-auto">
+              <!-- SEO header -->
+              <h1 style="display: none">
+                一个博客
+              </h1>
+              
+                <p class="note note-info">
+                  
+                          本文最后更新于：
+                            2021年3月20日 晚上
+                              
+                </p>
+                
+                  <div class="markdown-body">
+                    <h2 id="重新开始搞博客"><a href="#重新开始搞博客" class="headerlink" title="重新开始搞博客"></a>重新开始搞博客</h2><blockquote>
+<p>为什么选 <code>hexo</code> ?</p>
+</blockquote>
+<p>一开始只想有个属于自己的地方写文字记录,静态博客、使用<code>markdown</code>编写就是我的首选了，尤其是 <code>markdown</code> 自由的插入图片、视频，结合免费的图床和云存储服务，就可以把这些媒体文件从文字中分离出来，以后有了自己的动态网站迁移文章也方便。其次是自己以前搭建过 hexo + github pages 的博客, 还有一点很重要：<code>这些东西完全免费</code>，如果你不使用自定义域名的话，连域名的钱的省了。</p>
+<p>所以，本站点唯一的开销就是 ‘frmachao.top’ 这个域名了，一口气买了10年。</p>
+<blockquote>
+<p>评论怎么迁移呢?</p>
+</blockquote>
+<p>这个还没想好，因为现在的评论功能是使用 <code>Gitalk</code> 实现的，后面导出评论数据可能需要自己写个脚本才能批量导出。</p>
+<p>其实不止评论，因为静态博客的原因，很多东西都要借助第三方的插件来实现,比如</p>
+<ul>
+<li>文章阅读量</li>
+<li>网页访问量</li>
+<li>邮件订阅</li>
+<li>在线聊天</li>
+</ul>
+<h2 id="评论插件"><a href="#评论插件" class="headerlink" title="评论插件"></a>评论插件</h2><p>使用<code>gitalk</code>评论插件</p>
+<p>遇到问题：gitalk 官方代码采用了第三方提供的 cors proxy 服务，此服务已于 2021 年 1 月 31 日终止</p>
+<p>解决：gitalking 切换到自建的 CORS proxy<br>参考：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Zibri/cloudflare-cors-anywhere">https://github.com/Zibri/cloudflare-cors-anywhere</a> 一个代理库</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk/issues/429">https://github.com/gitalk/gitalk/issues/429</a> 大家对这个问题的讨论</li>
+</ol>
+<p>Gitalk 原理：在静态博客中使用评论功能，文章的唯一标示就是页面的<code>location.href</code> 即 url ,gitalk 将 这个唯一标识 作为 issue 的 label 与文章关联，每篇文章对应一个 Issue</p>
+<p><code>fluid主题</code> 里集成 Gitalk 插件时多处理了一步 在 <code>gitalk.ejs</code> 里做了 md5 加密</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> gitalk = <span class="hljs-keyword">new</span> Gitalk(&#123;<br>  clientID: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.clientID %&gt;&#x27;</span>,<br>  clientSecret: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.clientSecret %&gt;&#x27;</span>,<br>  repo: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.repo %&gt;&#x27;</span>,<br>  owner: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.owner %&gt;&#x27;</span>,<br>  admin: &lt;%- <span class="hljs-built_in">JSON</span>.stringify(theme.gitalk.admin || []) %&gt;,<br>  id: <span class="hljs-string">&#x27;&lt;%= md5(page.path) %&gt;&#x27;</span>, <span class="hljs-comment">// 这里做了md5 加密</span><br>  language: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.language %&gt;&#x27;</span>,<br>  labels: &lt;%- <span class="hljs-built_in">JSON</span>.stringify(theme.gitalk.labels || []) %&gt;,<br>  perPage: &lt;%= theme.gitalk.perPage %&gt;,<br>  pagerDirection: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.pagerDirection %&gt;&#x27;</span>,<br>  createIssueManually: &lt;%= theme.gitalk.createIssueManually %&gt;,<br>  distractionFreeMode: &lt;%= theme.gitalk.distractionFreeMode %&gt;,<br>  proxy: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.proxy %&gt;&#x27;</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<p><code>page.path</code>:page 是 hexo 中提供的变量，page.path 是页面网址（不含根路径）<br>比如 <code>https://frmachao.top/2021/03/test/</code>这个页面取 page.path 的值就是2021/03/test/，加密后的 32位 MD5：<code>4637a06e2ad237781ed4467cbe6a6dfd</code></p>
+<h2 id="图床"><a href="#图床" class="headerlink" title="图床"></a>图床</h2><blockquote>
+<p>目前是白嫖的 gitee 仓库</p>
+</blockquote>
+<p>使用 <code>github</code>仓库做图床不稳定(githubusercontent 在国内经常被墙),暂时用码云的仓库做图床</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://ping.chinaz.com/raw.githubusercontent.com">ping 检测 raw.githubusercontent.com 在国内的状态</a></li>
+</ul>
+<h2 id="网站统计插件"><a href="#网站统计插件" class="headerlink" title="网站统计插件"></a>网站统计插件</h2><ul>
+<li>使用 <code>leancloud</code> 的服务 统计网页访问数 与 文章阅读数</li>
+<li>百度统计</li>
+</ul>
+<h2 id="自定义域名与-SSL-证书"><a href="#自定义域名与-SSL-证书" class="headerlink" title="自定义域名与 SSL 证书"></a>自定义域名与 SSL 证书</h2><p>当前基于 hexo 的静态博客 <a href="http://frmachao.top/">frmachao’blog</a> 托管在 <code>github pages</code> 服务上。</p>
+<p>域名在购买于阿里云并备案，主要为了使用阿里云免费的<code>SSL</code>证书才备案的域名，结果晚上看了一篇博客 才知道： Github Pages 支持绑定自定义的域名，启用域名绑定后无需用户自行配置。（博客链接忘记了，后面找到后补上）</p>
+<h2 id="博客主题"><a href="#博客主题" class="headerlink" title="博客主题"></a>博客主题</h2><p>主题使用了 <a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid">fluid</a></p>
+<p>自己做的修改：</p>
+<ul>
+<li>Post.ejs 中添加 AddToAny 插件来支持文章分享</li>
+<li>Post.ejs 中修改 Custom 的位置到文章底部</li>
+</ul>
+<h2 id="测试插入视频"><a href="#测试插入视频" class="headerlink" title="测试插入视频"></a>测试插入视频</h2><blockquote>
+<p><code>javascript</code> 的诞生与死亡</p>
+</blockquote>
+<iframe
+width="100%"
+height="480px"
+src="//player.bilibili.com/player.html?aid=1623152&bvid=BV1Gx411P7GJ&cid=2467718&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
+</iframe>
+
+<blockquote><p>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</p>
+<footer><strong>David Levithan</strong><cite>Wide Awake</cite></footer></blockquote>
+
+<h2 id="hexo-常用命令"><a href="#hexo-常用命令" class="headerlink" title="hexo 常用命令"></a>hexo 常用命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo n <span class="hljs-string">&quot;我的博客&quot;</span> == hexo new <span class="hljs-string">&quot;我的博客&quot;</span> <span class="hljs-comment">#新建文章</span><br>hexo p == hexo publish<br>hexo g == hexo generate<span class="hljs-comment">#生成</span><br>hexo s == hexo server <span class="hljs-comment">#启动服务预览</span><br>hexo d == hexo deploy<span class="hljs-comment">#部署</span><br>hexo server <span class="hljs-comment">#Hexo 会监视文件变动并自动更新，您无须重启服务器。</span><br>hexo server -s <span class="hljs-comment">#静态模式</span><br>hexo server -p 5000 <span class="hljs-comment">#更改端口</span><br>hexo server -i 192.168.1.1 <span class="hljs-comment">#自定义 IP</span><br>hexo clean <span class="hljs-comment">#清除缓存 网页正常情况下可以忽略此条命令</span><br>hexo g <span class="hljs-comment">#生成静态网页</span><br>hexo d <span class="hljs-comment">#开始部署</span><br><br></code></pre></td></tr></table></figure>
+
+                  </div>
+                  <!-- Custom -->
+                  
+                    <div class="col-lg-7 mx-auto nopadding-x-md">
+                      <div class="container custom post-custom mx-auto">
+                        <img src="/img/weChat.jpg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="margin-top:0">
+                      </div>
+                    </div>
+                    
+                      <!-- Custom End -->
+                      <hr>
+                      <div>
+                        <div class="post-metas mb-3">
+                          
+                              
+                                <div class="post-meta">
+                                  <i class="iconfont icon-tags"></i>
+                                  
+                                    <a class="hover-with-bg" href="/tags/hexo/">
+                                      hexo
+                                    </a>
+                                    
+                                </div>
+                                
+                        </div>
+                        
+                          <p class="note note-warning">
+                            
+                                  本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                                    
+                          </p>
+                          
+                            
+                              <div class="post-prevnext">
+                                <article class="post-prev col-6">
+                                  
+                                    
+                                </article>
+                                <article class="post-next col-6">
+                                  
+                                    
+                                </article>
+                              </div>
+                              
+                      </div>
+                      <!-- AddToAny BEGIN -->
+                      <hr>
+                      <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                        <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+                        <a class="a2a_button_facebook"></a>
+                        <a class="a2a_button_twitter"></a>
+                        <a class="a2a_button_email"></a>
+                        <a class="a2a_button_douban"></a>
+                        <a class="a2a_button_wechat"></a>
+                        <a class="a2a_button_evernote"></a>
+                      </div>
+                      <script async src="https://static.addtoany.com/menu/page.js"></script>
+                      <!-- AddToAny END -->
+
+                      
+                        <!-- Comments -->
+                        <article class="comments" id="comments" lazyload>
+                          
+                                
+                                  
+                                    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.lazyComments('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '8fe50a1dda359f9a0967',
+          clientSecret: '89f3f6eda29f3b3b279655e336afc0528b525107',
+          repo: 'frmachao.github.io',
+          owner: 'frmachao',
+          admin: ["frmachao"],
+          id: '7c1b02acefaf2d82e0f553cb54de19d8',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false,
+          proxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+                        </article>
+                        
+            </article>
+          </div>
+        </div>
+      </div>
+      
+        <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+          <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+        </div>
+        
+    </div>
+  </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e9db9d1dd974fc34509a5c598033cea";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
