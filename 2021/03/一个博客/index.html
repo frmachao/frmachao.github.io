@@ -202,7 +202,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1k 字
+      1.1k 字
     </span>
   
 
@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      12
+      13
        分钟
     </span>
   
@@ -266,7 +266,7 @@
 <p>为什么选 <code>hexo</code> ?</p>
 </blockquote>
 <p>一开始只想有个属于自己的地方写文字记录,静态博客、使用<code>markdown</code>编写就是我的首选了，尤其是 <code>markdown</code> 自由的插入图片、视频，结合免费的图床和云存储服务，就可以把这些媒体文件从文字中分离出来，以后有了自己的动态网站迁移文章也方便。其次是自己以前搭建过 hexo + github pages 的博客, 还有一点很重要：<code>这些东西完全免费</code>，如果你不使用自定义域名的话，连域名的钱的省了。</p>
-<p>所以，本站点唯一的开销就是 ‘frmachao.top’ 这个域名了，一口气买了10年。</p>
+<p>所以，本站点唯一的开销就是 ‘frmachao.top’ 这个域名了，一口气买了 10 年。</p>
 <blockquote>
 <p>评论怎么迁移呢?</p>
 </blockquote>
@@ -288,7 +288,13 @@
 <p>Gitalk 原理：在静态博客中使用评论功能，文章的唯一标示就是页面的<code>location.href</code> 即 url ,gitalk 将 这个唯一标识 作为 issue 的 label 与文章关联，每篇文章对应一个 Issue</p>
 <p><code>fluid主题</code> 里集成 Gitalk 插件时多处理了一步 在 <code>gitalk.ejs</code> 里做了 md5 加密</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> gitalk = <span class="hljs-keyword">new</span> Gitalk(&#123;<br>  clientID: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.clientID %&gt;&#x27;</span>,<br>  clientSecret: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.clientSecret %&gt;&#x27;</span>,<br>  repo: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.repo %&gt;&#x27;</span>,<br>  owner: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.owner %&gt;&#x27;</span>,<br>  admin: &lt;%- <span class="hljs-built_in">JSON</span>.stringify(theme.gitalk.admin || []) %&gt;,<br>  id: <span class="hljs-string">&#x27;&lt;%= md5(page.path) %&gt;&#x27;</span>, <span class="hljs-comment">// 这里做了md5 加密</span><br>  language: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.language %&gt;&#x27;</span>,<br>  labels: &lt;%- <span class="hljs-built_in">JSON</span>.stringify(theme.gitalk.labels || []) %&gt;,<br>  perPage: &lt;%= theme.gitalk.perPage %&gt;,<br>  pagerDirection: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.pagerDirection %&gt;&#x27;</span>,<br>  createIssueManually: &lt;%= theme.gitalk.createIssueManually %&gt;,<br>  distractionFreeMode: &lt;%= theme.gitalk.distractionFreeMode %&gt;,<br>  proxy: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.proxy %&gt;&#x27;</span><br>&#125;);<br></code></pre></td></tr></table></figure>
-<p><code>page.path</code>:page 是 hexo 中提供的变量，page.path 是页面网址（不含根路径）<br>比如 <code>https://frmachao.top/2021/03/test/</code>这个页面取 page.path 的值就是2021/03/test/，加密后的 32位 MD5：<code>4637a06e2ad237781ed4467cbe6a6dfd</code></p>
+
+<p><code>page.path</code>:page 是 hexo 中提供的变量，page.path 是页面网址（不含根路径）<br>比如 <code>https://frmachao.top/2021/03/test/</code>这个页面取 page.path 的值就是 2021/03/test/，加密后的 32 位 MD5：<code>4637a06e2ad237781ed4467cbe6a6dfd</code></p>
+<blockquote>
+<p>2021.03.03 Gitalk 作者发布了更新</p>
+</blockquote>
+<p><code>Gitalk</code> 更新版本到 1.7.2 或者修改配置增加 proxy: ‘<a target="_blank" rel="noopener" href="https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token&#39;">https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token&#39;</a></p>
+<p>后面尝试自己搭建代 cors proxy 服务</p>
 <h2 id="图床"><a href="#图床" class="headerlink" title="图床"></a>图床</h2><blockquote>
 <p>目前是白嫖的 gitee 仓库</p>
 </blockquote>
