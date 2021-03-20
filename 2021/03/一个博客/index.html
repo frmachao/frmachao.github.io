@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      13
+      14
        分钟
     </span>
   
@@ -289,7 +289,7 @@
 <p><code>fluid主题</code> 里集成 Gitalk 插件时多处理了一步 在 <code>gitalk.ejs</code> 里做了 md5 加密</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> gitalk = <span class="hljs-keyword">new</span> Gitalk(&#123;<br>  clientID: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.clientID %&gt;&#x27;</span>,<br>  clientSecret: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.clientSecret %&gt;&#x27;</span>,<br>  repo: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.repo %&gt;&#x27;</span>,<br>  owner: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.owner %&gt;&#x27;</span>,<br>  admin: &lt;%- <span class="hljs-built_in">JSON</span>.stringify(theme.gitalk.admin || []) %&gt;,<br>  id: <span class="hljs-string">&#x27;&lt;%= md5(page.path) %&gt;&#x27;</span>, <span class="hljs-comment">// 这里做了md5 加密</span><br>  language: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.language %&gt;&#x27;</span>,<br>  labels: &lt;%- <span class="hljs-built_in">JSON</span>.stringify(theme.gitalk.labels || []) %&gt;,<br>  perPage: &lt;%= theme.gitalk.perPage %&gt;,<br>  pagerDirection: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.pagerDirection %&gt;&#x27;</span>,<br>  createIssueManually: &lt;%= theme.gitalk.createIssueManually %&gt;,<br>  distractionFreeMode: &lt;%= theme.gitalk.distractionFreeMode %&gt;,<br>  proxy: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.proxy %&gt;&#x27;</span><br>&#125;);<br></code></pre></td></tr></table></figure>
 
-<p><code>page.path</code>:page 是 hexo 中提供的变量，page.path 是页面网址（不含根路径）<br>比如 <code>https://frmachao.top/2021/03/test/</code>这个页面取 page.path 的值就是 2021/03/test/，加密后的 32 位 MD5：<code>4637a06e2ad237781ed4467cbe6a6dfd</code></p>
+<p><code>page.path</code>:page 是 hexo 中提供的变量，page.path 是页面网址（不含根路径）<br>比如 <code>https://frmachao.top/2021/03/test/</code>这个页面取 page.path 的值就是 2021/03/test/，加密后的 32 位 MD5：<code>4637a06e2ad237781ed4467cbe6a6dfd</code><br><img src="https://gitee.com/mccode/images/raw/master/uPic/Q5u4nh6MHHtV.png" srcset="/img/loading.gif" lazyload alt="Q5u4nh6MHHtV"><br><code>https://frmachao.top/links/</code> —&gt; links/index.html 非文章页面会返回这样的格式,加密后的 32位 MD5：<code>38687fdbcd50268b872dd8c493f739e6</code><br><img src="https://gitee.com/mccode/images/raw/master/uPic/wYtVZti7RfqJ.png" srcset="/img/loading.gif" lazyload alt="wYtVZti7RfqJ"></p>
 <blockquote>
 <p>2021.03.03 Gitalk 作者发布了更新</p>
 </blockquote>
@@ -405,7 +405,7 @@ src="//player.bilibili.com/player.html?aid=1623152&bvid=BV1Gx411P7GJ&cid=2467718
           repo: 'frmachao.github.io',
           owner: 'frmachao',
           admin: ["frmachao"],
-          id: '7c1b02acefaf2d82e0f553cb54de19d8',
+          id: '2021/03/一个博客/',
           language: 'zh-CN',
           labels: ["Gitalk"],
           perPage: 10,
