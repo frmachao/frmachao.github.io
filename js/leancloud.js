@@ -73,8 +73,8 @@
     var key = 'LeanCloud_UV_Flag';
     var flag = localStorage.getItem(key);
     if (flag) {
-      // 距离标记小于 24 小时则不计为 UV
-      if (new Date().getTime() - parseInt(flag, 10) <= 86400000) {
+      // 距离标记小于 6 小时则不计为 UV
+      if (new Date().getTime() - parseInt(flag, 10) <= 28800000) {
         return false;
       }
     }
