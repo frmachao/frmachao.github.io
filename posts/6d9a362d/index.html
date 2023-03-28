@@ -1,0 +1,663 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="frmachao">
+  <meta name="keywords" content="">
+  
+  <title>配置阿里云轻量应用服务器实现全站HTTPS访问 - frmachao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/css/main.min.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.frmachao.top","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"4ceed7fff81f6ddb070e16f3e8f21c10","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"GRh8dqRnhxkFl3vljLmgu9OU-gzGzoHsz","app_key":"F0tYf54R2Yb9hmohCo08A8l6","server_url":null}}};
+  </script>
+  <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/utils.min.js" ></script>
+  <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/color-schema.min.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="frmachao's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>frmachao's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/atom.xml" target="_blank">
+                <i class="iconfont icon-rss-fill"></i>
+                RSS
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/DUyX5S.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="配置阿里云轻量应用服务器实现全站HTTPS访问">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      frmachao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-26 16:26" pubdate>
+        2021年9月26日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      939 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      11
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+  <div class="container-fluid nopadding-x">
+    <div class="row nomargin-x">
+      <div class="d-none d-lg-block col-lg-2"></div>
+      <div class="col-lg-8 nopadding-x-md">
+        <div class="container nopadding-x-md" id="board-ctn">
+          <div class="py-5" id="board">
+            <article class="post-content mx-auto">
+              <!-- SEO header -->
+              <h1 style="display: none">
+                配置阿里云轻量应用服务器实现全站HTTPS访问
+              </h1>
+              
+                <p class="note note-info">
+                  
+                          本文最后更新于：
+                            2022年10月10日 下午
+                              
+                </p>
+                
+                  <div class="markdown-body">
+                    <p>[toc]</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间，我写了一个基于<code>React</code>+<code>Express</code>+<code>MongoDB</code>的个人网站 <a target="_blank" rel="noopener" href="http://www.frmachao.top/">www.frmachao.top</a>，现在要给它加上 <code>ssl</code> 证书，来实现全站<code>https</code>访问。</p>
+<h2 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h2><h3 id="购买免费的证书服务"><a href="#购买免费的证书服务" class="headerlink" title="购买免费的证书服务"></a>购买免费的证书服务</h3><p><a target="_blank" rel="noopener" href="https://common-buy.aliyun.com/?spm=5176.13785142.commonbuy2container.9.79e8778bjBRbjJ&commodityCode=cas_dv_public_cn&request=%7B%22ord_time%22:%221:Year%22,%22order_num%22:1,%22product%22:%22free_product%22,%22certCount%22:%2220%22%7D">阿里云盾证书服务</a></p>
+<blockquote>
+<p>注意： 单域名表示要申请的证书用于绑定1个具体域名（例如，只绑定<a target="_blank" rel="noopener" href="http://www.frmachao.top)/">www.frmachao.top）</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/D0z6dz.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="D0z6dz"></p>
+<h3 id="创建证书并进行证书申请操作"><a href="#创建证书并进行证书申请操作" class="headerlink" title="创建证书并进行证书申请操作"></a>创建证书并进行证书申请操作</h3><p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/gj1Mp8.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="gj1Mp8"></p>
+<h3 id="填写申请信息-并验证-DNS-信息"><a href="#填写申请信息-并验证-DNS-信息" class="headerlink" title="填写申请信息 并验证 DNS 信息"></a>填写申请信息 并验证 DNS 信息</h3><p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/DdJecL.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="DdJecL"></p>
+<blockquote>
+<p>注意：域名验证记录要在证书签发后再删除，否则因为没有解析记录导致证书签发失败</p>
+</blockquote>
+<p>主机记录值<code>_dnsauth</code> 就是系统自动生成的 域名验证记录 ，因为这里我的域名也是在阿里云解析的，如果你是其他 DNS 服务商解析的，需要自己添加一条这样的域名记录<br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/DJ0NyK.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="DJ0NyK"></p>
+<h2 id="搭建FTP服务器"><a href="#搭建FTP服务器" class="headerlink" title="搭建FTP服务器"></a>搭建FTP服务器</h2><blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/60152.html">阿里云文档</a></p>
+</blockquote>
+<p>Q:为什么要搭建FTP服务器<br>A:因为要上传证书到服务器,可能有其他方式上传，但是图形界面更直观些。</p>
+<h3 id="补充常用命令"><a href="#补充常用命令" class="headerlink" title="补充常用命令"></a>补充常用命令</h3><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig">启动服务：<span class="hljs-string">systemctl</span> <span class="hljs-string">start</span> <span class="hljs-string">vsftpd</span>.<span class="hljs-string">service</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span>关闭服务：<span class="hljs-string">systemctl</span> <span class="hljs-string">stop</span> <span class="hljs-string">vsftpd</span>.<span class="hljs-string">service</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span>重启服务：<span class="hljs-string">systemctl</span> <span class="hljs-string">restart</span> <span class="hljs-string">vsftpd</span>.<span class="hljs-string">service</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span>显示服务的状态：<span class="hljs-string">systemctl</span> <span class="hljs-string">status</span> <span class="hljs-string">vsftpd</span>.<span class="hljs-string">service</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span>在开机时启用服务：<span class="hljs-string">systemctl</span> <span class="hljs-string">enable</span> <span class="hljs-string">vsftpd</span>.<span class="hljs-string">service</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span>在开机时禁用服务：<span class="hljs-string">systemctl</span> <span class="hljs-string">disable</span> <span class="hljs-string">vsftpd</span>.<span class="hljs-string">service</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span>查看服务是否开机启动：<span class="hljs-string">systemctl</span> <span class="hljs-string">is-enabled</span> <span class="hljs-string">vsftpd</span>.<span class="hljs-string">service</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span>查看已启动的服务列表：<span class="hljs-string">systemctl</span> <span class="hljs-built_in">list-unit-files|grep</span> <span class="hljs-string">enabled</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span>查看启动失败的服务列表：<span class="hljs-string">systemctl</span> <span class="hljs-built_in">--failed</span><br></code></pre></td></tr></table></figure>
+<h3 id="遇到的问题："><a href="#遇到的问题：" class="headerlink" title="遇到的问题："></a>遇到的问题：</h3><ol>
+<li>FileZilla客户端 连接时的加密方式….. 卡了我半天<br>使用文档截图中连接的加密方式时，一直提示连接超时，我以为是配置的FTP服务器有问题，对着文档反复走几遍折腾了 一个小时，最后试了试选择明文连接，结果直接成功了</li>
+</ol>
+<p>😭只要没文化 处处是魔法<br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2YSLJ1.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="2YSLJ1"></p>
+<h2 id="centos-7-安装-nginx-ssl-模块"><a href="#centos-7-安装-nginx-ssl-模块" class="headerlink" title="centos 7 安装 nginx + ssl 模块"></a>centos 7 安装 nginx + ssl 模块</h2><p>我购买是阿里云轻量应用服务器 CentOS 7 的镜像<br>一开始我直接使用yum方式安装的ngninx，但是这种方式安装的ngninx默认是不支持ssl的，所以需要从代码编译安装Nginx</p>
+<p>参考:</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nickchou/p/12978724.html">centos 7 源码方式安装nginx(1.18.0) + ssl + 阿里证书配置</a></li>
+</ol>
+<h3 id="源码安装-Nginx"><a href="#源码安装-Nginx" class="headerlink" title="源码安装 Nginx"></a>源码安装 Nginx</h3><p>遇到的问题：</p>
+<ol>
+<li>CentOS7中添加环境变量后立即生效，但是重启服务器又失效</li>
+</ol>
+<p>原因：添加环境变量到 /etc/profile文件<br>source /etc/profile 使配置文件生效<br>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/lxw1844912514/article/details/108547340">CentOS7中添加环境变量后立即生效，但是重启服务器又失效</a></p>
+<h3 id="检查是否已经含有-ssl-模块"><a href="#检查是否已经含有-ssl-模块" class="headerlink" title="检查是否已经含有 ssl 模块"></a>检查是否已经含有 ssl 模块</h3><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">nginx -V</span><br></code></pre></td></tr></table></figure>
+<p>看到输出里 含有 <code>--with-http_ssl_module</code> 明就是带ssl参数编译的</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nginx</span> version: nginx/<span class="hljs-number">1</span>.<span class="hljs-number">20</span>.<span class="hljs-number">1</span><br><span class="hljs-attribute">built</span> by gcc <span class="hljs-number">4</span>.<span class="hljs-number">8</span>.<span class="hljs-number">5</span> <span class="hljs-number">20150623</span> (Red Hat <span class="hljs-number">4</span>.<span class="hljs-number">8</span>.<span class="hljs-number">5</span>-<span class="hljs-number">44</span>) (GCC) <br><span class="hljs-attribute">built</span> with OpenSSL <span class="hljs-number">1</span>.<span class="hljs-number">0</span>.<span class="hljs-number">2</span>k-fips  <span class="hljs-number">26</span> Jan <span class="hljs-number">2017</span><br><span class="hljs-attribute">TLS</span> SNI support enabled<br><span class="hljs-attribute">configure</span> arguments: --prefix=/usr/local/nginx --with-threads --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-http_ssl_module<br></code></pre></td></tr></table></figure>
+<h3 id="在Nginx服务器上安装ssl证书"><a href="#在Nginx服务器上安装ssl证书" class="headerlink" title="在Nginx服务器上安装ssl证书"></a>在Nginx服务器上安装ssl证书</h3><blockquote>
+<p>参考： <a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/98728.html#title-0np-hxn-v02">在Nginx（或Tengine）服务器上安装证书</a></p>
+</blockquote>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/OAbHnZ.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="OAbHnZ"></p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>学习到的linux命令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">mv</span>  <span class="hljs-comment"># 移动文件/目录</span><br><span class="hljs-built_in">cp</span>  <span class="hljs-comment"># 复制文件/目录</span><br>touch <span class="hljs-comment"># 用于修改文件或者目录的时间属性，若文件不存在会新建一个</span><br>mkdir <span class="hljs-comment"># 创建目录</span><br>ln   <span class="hljs-comment"># 类似windows 中的快捷方式，这是一个非常重要命令，它的功能是为某一个文件在另外一个位置建立一个同步的链接。</span><br></code></pre></td></tr></table></figure>
+<p>linux 中的几种配置环境变量的文件目录</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/etc/</span>bashrc <br><span class="hljs-regexp">/etc/</span>profile<br><span class="hljs-regexp">/etc/</span>sudoers<br></code></pre></td></tr></table></figure>
+
+<h2 id="另一种方案-Let’s-Encrypt"><a href="#另一种方案-Let’s-Encrypt" class="headerlink" title="另一种方案: Let’s Encrypt"></a>另一种方案: <a target="_blank" rel="noopener" href="https://letsencrypt.org/zh-cn/about/">Let’s Encrypt</a></h2><blockquote>
+<p>Let’s Encrypt 是一家免费、开放、自动化的证书颁发机构（CA），为公众的利益而运行。它是一项由 Internet Security Research Group（ISRG）提供的服务。</p>
+</blockquote>
+
+                  </div>
+                  <!-- Custom -->
+                  
+                    <div class="col-lg-7 mx-auto nopadding-x-md">
+                      <div class="container custom post-custom mx-auto">
+                        <img src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/weChat.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="margin-top:0">
+                      </div>
+                    </div>
+                    
+                      <!-- Custom End -->
+                      <hr>
+                      <div>
+                        <div class="post-metas mb-3">
+                          
+                            <div class="post-meta mr-3">
+                              <i class="iconfont icon-category"></i>
+                              
+                                <a class="hover-with-bg" href="/categories/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/">
+                                  代码人生
+                                </a>
+                                
+                            </div>
+                            
+                              
+                                <div class="post-meta">
+                                  <i class="iconfont icon-tags"></i>
+                                  
+                                    <a class="hover-with-bg" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                                      服务器
+                                    </a>
+                                    
+                                    <a class="hover-with-bg" href="/tags/https/">
+                                      https
+                                    </a>
+                                    
+                                </div>
+                                
+                        </div>
+                        
+                          <p class="note note-warning">
+                            
+                                  本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                                    
+                          </p>
+                          
+                            
+                              <div class="post-prevnext">
+                                <article class="post-prev col-6">
+                                  
+                                    
+                                      <a href="/posts/1de4d68a/">
+                                        <i class="iconfont icon-arrowleft"></i>
+                                        <span class="hidden-mobile">
+                                          第一次全栈开发总结
+                                        </span>
+                                        <span class="visible-mobile">
+                                          上一篇
+                                        </span>
+                                      </a>
+                                      
+                                </article>
+                                <article class="post-next col-6">
+                                  
+                                    
+                                      <a href="/posts/62bfed46/">
+                                        <span class="hidden-mobile">
+                                          网站评论模块 mongodb 字段设计及实现
+                                        </span>
+                                        <span class="visible-mobile">
+                                          下一篇
+                                        </span>
+                                        <i class="iconfont icon-arrowright"></i>
+                                      </a>
+                                      
+                                </article>
+                              </div>
+                              
+                      </div>
+                      <!-- AddToAny BEGIN -->
+                      <hr>
+                      <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                        <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+                        <a class="a2a_button_facebook"></a>
+                        <a class="a2a_button_twitter"></a>
+                        <a class="a2a_button_email"></a>
+                        <a class="a2a_button_douban"></a>
+                        <a class="a2a_button_wechat"></a>
+                        <a class="a2a_button_evernote"></a>
+                      </div>
+                      <script async src="https://static.addtoany.com/menu/page.js"></script>
+                      <!-- AddToAny END -->
+
+                      
+                        <!-- Comments -->
+                        <article class="comments" id="comments" lazyload>
+                          
+                                
+                                  
+                                    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.lazyComments('gitalk-container', function() {
+      Fluid.utils.createCssLink('https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '8fe50a1dda359f9a0967',
+          clientSecret: '89f3f6eda29f3b3b279655e336afc0528b525107',
+          repo: 'frmachao.github.io',
+          owner: 'frmachao',
+          admin: ["frmachao"],
+          id: 'fee1b5c944c6161a77b28f0237491875',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false,
+          proxy: 'cors.uiisp.top/?https://github.com/login/oauth/access_token'
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+                        </article>
+                        
+            </article>
+          </div>
+        </div>
+      </div>
+      
+        <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+          <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+        </div>
+        
+    </div>
+  </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <span>© 2021 </span> <a href="https://blog.frmachao.top" target="_blank" rel="nofollow noopener"><span>Frmachao</span></a> <a  href="https://github.com/frmachao/frmachao.github.io"  class="iconfont icon-github-fill" target="_blank" style="font-size: 1.5rem" > </a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/duration.min.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/debouncer.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/events.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/plugins.min.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/img-lazyload.min.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/leancloud.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/local-search.min.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4ceed7fff81f6ddb070e16f3e8f21c10";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/boot.min.js" ></script>
+
+
+</body>
+</html>

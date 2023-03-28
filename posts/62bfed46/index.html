@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="frmachao">
+  <meta name="keywords" content="">
+  
+  <title>网站评论模块 mongodb 字段设计及实现 - frmachao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/css/main.min.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.frmachao.top","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"4ceed7fff81f6ddb070e16f3e8f21c10","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"GRh8dqRnhxkFl3vljLmgu9OU-gzGzoHsz","app_key":"F0tYf54R2Yb9hmohCo08A8l6","server_url":null}}};
+  </script>
+  <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/utils.min.js" ></script>
+  <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/color-schema.min.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="frmachao's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>frmachao's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/atom.xml" target="_blank">
+                <i class="iconfont icon-rss-fill"></i>
+                RSS
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/D1Mb51.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="网站评论模块 mongodb 字段设计及实现">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      frmachao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-26 14:25" pubdate>
+        2021年9月26日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+  <div class="container-fluid nopadding-x">
+    <div class="row nomargin-x">
+      <div class="d-none d-lg-block col-lg-2"></div>
+      <div class="col-lg-8 nopadding-x-md">
+        <div class="container nopadding-x-md" id="board-ctn">
+          <div class="py-5" id="board">
+            <article class="post-content mx-auto">
+              <!-- SEO header -->
+              <h1 style="display: none">
+                网站评论模块 mongodb 字段设计及实现
+              </h1>
+              
+                <p class="note note-info">
+                  
+                          本文最后更新于：
+                            2022年10月10日 下午
+                              
+                </p>
+                
+                  <div class="markdown-body">
+                    <p>[toc]</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间，我写了一个基于<code>React+Express+MongoDB</code>的个人网站。<a target="_blank" rel="noopener" href="http://101.132.140.62/">http://101.132.140.62/</a>，网站上有个叫做 <a target="_blank" rel="noopener" href="http://101.132.140.62/datum">知拾</a> 的单页面应用，它主要是一个知识库类型的应用，人人都可以往里面记录自己认为有用的知识。</p>
+<blockquote>
+<p>现在我想要添加对知识的评论功能</p>
+</blockquote>
+<h2 id="项目开发环境"><a href="#项目开发环境" class="headerlink" title="项目开发环境"></a>项目开发环境</h2><ul>
+<li>MongoDB 4.4.8</li>
+<li>Express 4.17.1</li>
+<li>React 16.13.1</li>
+</ul>
+<h2 id="知拾应用评论区的功能"><a href="#知拾应用评论区的功能" class="headerlink" title="知拾应用评论区的功能"></a>知拾应用评论区的功能</h2><ul>
+<li>支持嵌套评论，最大深度2层</li>
+<li>支持精简版的 markdown 语法<ul>
+<li>那么评论提交的应该是html 而不是 text，(不支持编辑)</li>
+</ul>
+</li>
+<li>评论只能删除不能修改</li>
+<li>评论应该支持分页<ul>
+<li>子评论也要支持分页</li>
+</ul>
+</li>
+<li>增加新评论时邮件通知 <code>知识作者</code> 或者 <code>被回复人</code></li>
+</ul>
+<blockquote>
+<p>参考 B 站评论区</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/FTZrwc.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="FTZrwc"><br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/haVB0N.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="haVB0N"></p>
+<h2 id="数据库字段设计"><a href="#数据库字段设计" class="headerlink" title="数据库字段设计"></a>数据库字段设计</h2><p>如图所示：<code>Article、 Comment 、User</code> 三个集合，通过MongoDB 的 ref 将三个集合关联起来。<br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/g2V5mw.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="g2V5mw"></p>
+<h3 id="对应到-Mongoose-中的评论模型"><a href="#对应到-Mongoose-中的评论模型" class="headerlink" title="对应到 Mongoose 中的评论模型"></a>对应到 Mongoose 中的评论模型</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> CommentSchema = <span class="hljs-keyword">new</span> mongoose.Schema(&#123;<br>    <span class="hljs-comment">// 评论所在的文章 id 关联 Article 集合</span><br>    datumID: &#123; <span class="hljs-attr">type</span>: mongoose.Schema.Types.ObjectId, <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span> &#125;,<br>    html: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>, <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">validate</span>: <span class="hljs-regexp">/\S+/</span> &#125;,<br>    <span class="hljs-comment">//预留字段 被赞数</span><br>    likes: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">Number</span>, <span class="hljs-attr">default</span>: <span class="hljs-number">0</span> &#125;,<br>    <span class="hljs-comment">//预留字段 被踩数</span><br>    unlikes: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">Number</span>, <span class="hljs-attr">default</span>: <span class="hljs-number">0</span> &#125;,<br>    <span class="hljs-comment">// 评论作者信息 关联 User 集合</span><br>    author: &#123;<br>        user: &#123; <span class="hljs-attr">type</span>: mongoose.Schema.Types.ObjectId, <span class="hljs-attr">ref</span>: <span class="hljs-string">&quot;User&quot;</span>, <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span> &#125;,<br>        role: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>, <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">default</span>: <span class="hljs-string">&quot;normal&quot;</span> &#125;, <span class="hljs-comment">// author|normal</span><br>    &#125;,<br>    <span class="hljs-comment">// 创建日期</span><br>    create_time: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">Date</span>, <span class="hljs-attr">default</span>: <span class="hljs-built_in">Date</span>.now &#125;,<br>    <span class="hljs-comment">// 最后修改日期</span><br>    update_time: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">Date</span>, <span class="hljs-attr">default</span>: <span class="hljs-built_in">Date</span>.now &#125;,<br>    child_comments: [<br>        &#123;<br>            <span class="hljs-comment">// 谁在评论  关联 User 集合</span><br>            author: &#123;<br>                user: &#123; <span class="hljs-attr">type</span>: mongoose.Schema.Types.ObjectId, <span class="hljs-attr">ref</span>: <span class="hljs-string">&quot;User&quot;</span>, <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span> &#125;,<br>                role: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>, <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">default</span>: <span class="hljs-string">&quot;normal&quot;</span> &#125;, <span class="hljs-comment">// author|normal</span><br>            &#125;,<br>            <span class="hljs-comment">// 对谁评论  关联 User 集合</span><br>            reply_to_author: &#123;<br>                user: &#123; <span class="hljs-attr">type</span>: mongoose.Schema.Types.ObjectId, <span class="hljs-attr">ref</span>: <span class="hljs-string">&quot;User&quot;</span>, <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span> &#125;,<br>                role: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>, <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">default</span>: <span class="hljs-string">&quot;normal&quot;</span> &#125;, <span class="hljs-comment">// author|normal &#125;,</span><br>            &#125;,<br>            html: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>, <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">validate</span>: <span class="hljs-regexp">/\S+/</span> &#125;,<br>            <span class="hljs-comment">// 被赞数</span><br>            likes: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">Number</span>, <span class="hljs-attr">default</span>: <span class="hljs-number">0</span> &#125;,<br>            <span class="hljs-comment">// 被踩数</span><br>            unlikes: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">Number</span>, <span class="hljs-attr">default</span>: <span class="hljs-number">0</span> &#125;,<br>            <span class="hljs-comment">// 创建日期</span><br>            create_time: &#123; <span class="hljs-attr">type</span>: <span class="hljs-built_in">Date</span>, <span class="hljs-attr">default</span>: <span class="hljs-built_in">Date</span>.now &#125;,<br>        &#125;,<br>    ],<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h2 id="评论功能实现"><a href="#评论功能实现" class="headerlink" title="评论功能实现"></a>评论功能实现</h2><p>因为没有编辑评论内容的需求，所以只要实现增加(Create)、读取(Retrieve)、和删除(Delete)</p>
+<ol>
+<li>添加<ul>
+<li>添加父评论</li>
+<li>添加子评论</li>
+</ul>
+</li>
+<li>查询<ul>
+<li>获取父评论列表接口</li>
+<li>获取子评论列表接口</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>删除父评论</li>
+<li>删除子评论</li>
+</ul>
+</li>
+</ol>
+<h3 id="实际项目中对应的代码"><a href="#实际项目中对应的代码" class="headerlink" title="实际项目中对应的代码"></a>实际项目中对应的代码</h3><blockquote>
+<p>Tips 项目中我使用了 GraphQL 接口风格 <a target="_blank" rel="noopener" href="https://graphql.cn/">什么是Graphql</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 处理 async 函数中的异常</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-variable">promise</span></span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">awaitWrap</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">U</span> = <span class="hljs-title">Error</span>&gt;(<span class="hljs-params">promise: <span class="hljs-built_in">Promise</span>&lt;T&gt;</span>): <span class="hljs-title">Promise</span>&lt;[<span class="hljs-title">U</span> | <span class="hljs-title">null</span>, <span class="hljs-title">T</span> | <span class="hljs-title">null</span>]&gt; </span>&#123;<br>    <span class="hljs-keyword">return</span> promise<br>        .then&lt;[<span class="hljs-literal">null</span>, T]&gt;(<span class="hljs-function">(<span class="hljs-params">data: T</span>) =&gt;</span> [<span class="hljs-literal">null</span>, data])<br>        .catch&lt;[U, <span class="hljs-literal">null</span>]&gt;(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> [err, <span class="hljs-literal">null</span>]);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>创建父评论：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs js">add: <span class="hljs-keyword">async</span> (args: Iadd, <span class="hljs-attr">context</span>: any) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> &#123; datumID, html, author &#125; = args;<br>    <span class="hljs-keyword">if</span> (!context.req.user) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;未登陆用户无权限&quot;</span>;<br>    &#125;<br>    <span class="hljs-comment">// 查询文章获取文章相关信息</span><br>    <span class="hljs-keyword">const</span> [errArticle, result] = <span class="hljs-keyword">await</span> awaitWrap&lt;ArticleDocument&gt;(<br>        Article.findOne(&#123; <span class="hljs-attr">_id</span>: datumID &#125;, &#123; <span class="hljs-attr">author</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">title</span>: <span class="hljs-number">1</span> &#125;)<br>            .populate(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;author&quot;</span> &#125;)<br>            .exec()<br>    );<br>    <span class="hljs-keyword">if</span> (errArticle) <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;添加评论失败1&quot;</span>;<br>    <span class="hljs-keyword">const</span> [err, newComment] = <span class="hljs-keyword">await</span> awaitWrap(<br>        Comment.create(&#123;<br>            datumID,<br>            html,<br>            author: &#123;<br>                user: author,<br>                role: getRole(author, result.author._id.toString()),<br>            &#125;,<br>            child_comments: [],<br>        &#125;)<br>    );<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;添加评论失败2&quot;</span>;<br>    <span class="hljs-keyword">const</span> &#123; req &#125; = context;<br>    <span class="hljs-comment">// 邮件通知作者 谁评论</span><br>    <span class="hljs-keyword">const</span> sendApplyJoinEmail = <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-keyword">const</span> transporter = nodemailer.createTransport(&#123;<br>            service: <span class="hljs-string">&quot;126&quot;</span>,<br>            auth: &#123;<br>                user: process.env.SMTP_USER,<br>                pass: process.env.SMTP_PASSWORD,<br>            &#125;,<br>        &#125;);<br>        <span class="hljs-keyword">const</span> mailOptions = &#123;<br>            to: result.author.email,<br>            <span class="hljs-keyword">from</span>: process.env.SMTP_USER,<br>            subject: <span class="hljs-string">`&quot;<span class="hljs-subst">$&#123;context.req.user.profile.name&#125;</span>&quot;评论了你的知识《<span class="hljs-subst">$&#123;result.title&#125;</span>》`</span>,<br>            html: <span class="hljs-string">`点击下面链接处理:</span><br><span class="hljs-string">            &lt;p/&gt;</span><br><span class="hljs-string">            &lt;a href=&quot;<span class="hljs-subst">$&#123;req.headers.origin&#125;</span>/datum/view?id=<span class="hljs-subst">$&#123;datumID&#125;</span>&quot;&gt;<span class="hljs-subst">$&#123;req.headers.origin&#125;</span>/datum/view?id=<span class="hljs-subst">$&#123;datumID&#125;</span>&lt;/a&gt;`</span>,<br>        &#125;;<br>        transporter.sendMail(mailOptions);<br>    &#125;;<br>    sendApplyJoinEmail();<br>    <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">status</span>: <span class="hljs-string">&quot;ok&quot;</span>, <span class="hljs-attr">msg</span>: <span class="hljs-string">&quot;添加成功&quot;</span>, <span class="hljs-attr">commentID</span>: newComment._id &#125;;<br>&#125;,<br><br></code></pre></td></tr></table></figure>
+<p>现在我们添加一条父评论测试一下接口：<br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/tbIzXv.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="tbIzXv"><br>然后去数据库中查看：<br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/NO3YVi.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="NO3YVi"></p>
+<p>创建子评论：主要通过 <code>$push</code> 操作符实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs js">addChild: <span class="hljs-keyword">async</span> (args: IaddChild, <span class="hljs-attr">context</span>: any) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> &#123; id, datumID, html, author, reply_to_author &#125; = args;<br>    <span class="hljs-keyword">if</span> (!context.req.user) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;未登陆用户无权限&quot;</span>;<br>    &#125;<br>    <span class="hljs-comment">// 查询文章获取文章作者</span><br>    <span class="hljs-keyword">const</span> [errArticle, result] = <span class="hljs-keyword">await</span> awaitWrap(<br>        Article.findOne(&#123; <span class="hljs-attr">_id</span>: datumID &#125;, &#123; <span class="hljs-attr">author</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">title</span>: <span class="hljs-number">1</span> &#125;)<br>            .populate(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;author&quot;</span> &#125;)<br>            .exec()<br>    );<br>    <span class="hljs-keyword">if</span> (errArticle) <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;添加评论失败&quot;</span>;<br><br>    <span class="hljs-keyword">const</span> [err] = <span class="hljs-keyword">await</span> awaitWrap(<br>        Comment.updateOne(<br>            &#123; <span class="hljs-attr">_id</span>: id &#125;,<br>            &#123;<br>                $push: &#123;<br>                    child_comments: &#123;<br>                        author: &#123;<br>                            user: author,<br>                            role: getRole(author, result.author._id.toString()),<br>                        &#125;,<br>                        reply_to_author: &#123;<br>                            user: reply_to_author,<br>                            role: getRole(reply_to_author, result.author._id.toString()),<br>                        &#125;,<br>                        html,<br>                    &#125;,<br>                &#125;,<br>            &#125;<br>        ).exec()<br>    );<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;添加评论失败&quot;</span>;<br>    <span class="hljs-keyword">const</span> &#123; req &#125; = context;<br>    <span class="hljs-comment">// 发邮件给 reply_to_author</span><br>    <span class="hljs-keyword">const</span> [errUser, data] = <span class="hljs-keyword">await</span> awaitWrap&lt;UserDocument&gt;(<br>        User.findOne(&#123; <span class="hljs-attr">_id</span>: reply_to_author &#125;).exec()<br>    );<br>    <span class="hljs-keyword">if</span> (errUser) <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;添加评论失败&quot;</span>;<br>    <span class="hljs-keyword">const</span> sendApplyJoinEmail = <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-keyword">const</span> transporter = nodemailer.createTransport(&#123;<br>            service: <span class="hljs-string">&quot;126&quot;</span>,<br>            auth: &#123;<br>                user: process.env.SMTP_USER,<br>                pass: process.env.SMTP_PASSWORD,<br>            &#125;,<br>        &#125;);<br>        <span class="hljs-keyword">const</span> mailOptions = &#123;<br>            to: data.email,<br>            <span class="hljs-keyword">from</span>: process.env.SMTP_USER,<br>            subject: <span class="hljs-string">`&quot;<span class="hljs-subst">$&#123;context.req.user.profile.name&#125;</span>&quot;在《<span class="hljs-subst">$&#123;result.title&#125;</span>》回复了你`</span>,<br>            html: <span class="hljs-string">`点击下面链接处理:</span><br><span class="hljs-string">                    &lt;p/&gt;</span><br><span class="hljs-string">                    &lt;a href=&quot;<span class="hljs-subst">$&#123;req.headers.origin&#125;</span>/datum/view?id=<span class="hljs-subst">$&#123;datumID&#125;</span>&quot;&gt;<span class="hljs-subst">$&#123;req.headers.origin&#125;</span>/datum/view?id=<span class="hljs-subst">$&#123;datumID&#125;</span>&lt;/a&gt;`</span>,<br>        &#125;;<br>        transporter.sendMail(mailOptions);<br>    &#125;;<br>    sendApplyJoinEmail();<br>    <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">status</span>: <span class="hljs-string">&quot;ok&quot;</span>, <span class="hljs-attr">msg</span>: <span class="hljs-string">&quot;添加成功&quot;</span> &#125;;<br>&#125;,<br></code></pre></td></tr></table></figure>
+<p>现在我们添加一条子评论测试一下接口：<br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/1IuESr.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="1IuESr"><br>然后去数据库中查看：<br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/x8m6z5.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="x8m6z5"></p>
+<p>读取(Retrieve)、和删除(Delete) 的接口类似，我这里就不贴了..</p>
+<ul>
+<li>子评论分页主要通过 <code>$slice</code> 和 <code>$size</code> 操作符实现</li>
+<li>删除子评论 通过<code>$pull</code>操作法实现</li>
+</ul>
+<h3 id="不要相信前端传来的数据！"><a href="#不要相信前端传来的数据！" class="headerlink" title="不要相信前端传来的数据！"></a>不要相信前端传来的数据！</h3><p>‘author.role’的值应通过查询文章获取作者id 和 当前登陆用户id 在后端比较出来的, 同理 reply_to_author.role 也是一样。</p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><h3 id="MongoDB-对嵌套的数组对象使用-lookup操作法"><a href="#MongoDB-对嵌套的数组对象使用-lookup操作法" class="headerlink" title="MongoDB 对嵌套的数组对象使用 $lookup操作法"></a>MongoDB 对嵌套的数组对象使用 $lookup操作法</h3><p>因为 Comment 集合中的 child_comments 字段是一个数组对象</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">child_comments:[<br><span class="hljs-code">    &#123;author:&#123;user,role&#125;,reply_to_author,....&#125;</span><br>]<br><br></code></pre></td></tr></table></figure>
+<p>当我做通过 $lookup 操作符做多表关联查找操作时,child_comments 中的字段会被覆盖</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-comment">// 执行</span><br>&#123;<br>	$lookup: &#123;<br><span class="hljs-symbol">		from:</span> <span class="hljs-string">&quot;users&quot;</span>,<br><span class="hljs-symbol">		localField:</span> <span class="hljs-string">&quot;child_comments.author.user&quot;</span>,<br><span class="hljs-symbol">		foreignField:</span> <span class="hljs-string">&quot;_id&quot;</span>,<br><span class="hljs-symbol">		as:</span> <span class="hljs-string">&quot;child_comments.author.user&quot;</span>,<br>	&#125;,<br>&#125;<br><span class="hljs-comment">// 实际返回的 child_comments 数组对象中 author.role 字段没有了</span><br>    <span class="hljs-string">&quot;child_comments&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;user&quot;</span>: [<br>          &#123;<br>            <span class="hljs-string">&quot;_id&quot;</span>: ObjectId(<span class="hljs-string">&quot;5a934e000102030405000003&quot;</span>),<br>            <span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;frmachao@126.com&quot;</span>,<br>            <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-string">&quot;user1&quot;</span>,<br>            <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;frmachao&quot;</span><br>          &#125;<br>        ]<br>      &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>附上演示地址：<a target="_blank" rel="noopener" href="https://mongoplayground.net/p/aSKn8PhYXow">MongoDB playground</a></p>
+<p>通过搜索引擎 检索 <code>mongodb</code>+ <code>array</code> + <code>lookup</code> 我找到了解决办法</p>
+<p>在stack overflow上有个问题，跟我遇到的情况基本一样： <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/63267126/mongodb-lookup-with-array">mongodb-lookup-with-array</a></p>
+<blockquote>
+<p>解决办法： 通过 <code>unwind</code> + <code>$group</code> 来做</p>
+</blockquote>
+<p>先将数组打平，然后执行 lookup 操作</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs dts">&#123;<br>  $unwind: &#123;<br><span class="hljs-symbol">    path:</span> <span class="hljs-string">&quot;$child_comments&quot;</span>,<br><span class="hljs-symbol">    preserveNullAndEmptyArrays:</span> true,<br>    <br>  &#125;,<br>  <br>&#125;,<br>  &#123;<br>  $lookup: &#123;<br><span class="hljs-symbol">    from:</span> <span class="hljs-string">&quot;user&quot;</span>,<br><span class="hljs-symbol">    localField:</span> <span class="hljs-string">&quot;child_comments.author.user&quot;</span>,<br><span class="hljs-symbol">    foreignField:</span> <span class="hljs-string">&quot;id&quot;</span>,<br><span class="hljs-symbol">    as:</span> <span class="hljs-string">&quot;child_comments.author.user&quot;</span>,<br>    <br>  &#125;,<br>  <br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<p>最后 通过 <code>group</code> 重新生成数组</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">&#123;<br>  <span class="hljs-variable">$group</span>: &#123;<br>    _id: <span class="hljs-string">&quot;<span class="hljs-variable">$_id</span>&quot;</span>,<br>    datumID: &#123;<br>      <span class="hljs-variable">$first</span>: <span class="hljs-string">&quot;<span class="hljs-variable">$datumID</span>&quot;</span>,<br>      <br>    &#125;,<br>    html: &#123;<br>      <span class="hljs-variable">$first</span>: <span class="hljs-string">&quot;<span class="hljs-variable">$html</span>&quot;</span><br>    &#125;,<br>    child_comments: &#123;<br>      <span class="hljs-variable">$push</span>: <span class="hljs-string">&quot;<span class="hljs-variable">$child_comments</span>&quot;</span>,<br>      <br>    &#125;,<br>    <br>  &#125;,<br>  <br>&#125;,<br></code></pre></td></tr></table></figure>
+<p>附上演示地址：<a target="_blank" rel="noopener" href="https://mongoplayground.net/p/h3jwNQ0Yoxv">MongoDB playground</a></p>
+<h3 id="数组中的字段不一定存在时-该如何判断"><a href="#数组中的字段不一定存在时-该如何判断" class="headerlink" title="数组中的字段不一定存在时 该如何判断"></a>数组中的字段不一定存在时 该如何判断</h3><p>因为我要统计每条父评论下一共有多少子评论,来实现子评论的分页查询操作，这个主要通过 $size操作符来实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">$addFields: &#123;<br>	child_total: &#123;<br>		$size: <span class="hljs-string">&quot;$child_comments&quot;</span><br>	&#125;,<br>&#125;,<br><br></code></pre></td></tr></table></figure>
+<p>但是上面代码执行后的结果并不是我预期的，因为之前在做<code>lookup</code>操作时，如果 <code>child_comments</code>字段为空就会得到这样的结果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>  <span class="hljs-string">&quot;_id&quot;</span>: ObjectId(<span class="hljs-string">&quot;5a934e000102030405000002&quot;</span>),<br>  <span class="hljs-string">&quot;child_comments&quot;</span>: [<br>    &#123;<br>      <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;user&quot;</span>: []<br>      &#125;<br>    &#125;<br>  ],<br>  <span class="hljs-string">&quot;datumID&quot;</span>: <span class="hljs-literal">null</span>,<br>  <span class="hljs-string">&quot;html&quot;</span>: <span class="hljs-string">&quot;这是父评论2&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>显然像这样的话，<code>child_comments</code> 数组的长度就会跟实际子评论数量不同，所以在计算child_total 要额外判断。</p>
+<p>一开始我使用 $type 操作符 在聚合操作中做判断：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>  <span class="hljs-string">&quot;$addFields&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;child_total&quot;</span>: &#123;<br>      $type: <span class="hljs-string">&quot;$child_comments.author&quot;</span><br>    &#125;<br>  &#125;<br>&#125;<br><span class="hljs-comment">// 得到 child_total 居然是 array</span><br></code></pre></td></tr></table></figure>
+<p>翻阅文档后得知在聚合阶段 与$type根据 BSON 类型匹配数组元素的查询运算符不同，$type 聚合运算符不检查数组元素。相反，当传递一个数组作为其参数时，$type聚合运算符返回参数的类型，即”array”。</p>
+<p>既然这样我就换种思路：</p>
+<ol>
+<li>先将计算 child_total 字段的操作提前到 数组 lookup 操作之前</li>
+<li>在<code>group</code>操作重新生成数组时，对 <code>child_comments</code>做如下处理<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>	$set: &#123;<br>		child_comments: &#123;<br>			$switch: &#123;<br>				branches: [&#123;<br>				<span class="hljs-keyword">case</span>:<br>					&#123;<br>						$in:<br>						[<span class="hljs-string">&quot;normal&quot;</span>, <span class="hljs-string">&quot;$child_comments.author.role&quot;</span>],<br>					&#125;,<br>					then: <span class="hljs-string">&quot;$child_comments&quot;</span>,<br>				&#125;,<br>				&#123;<br>				<span class="hljs-keyword">case</span>:<br>					&#123;<br>						$in:<br>						[<span class="hljs-string">&quot;author&quot;</span>, <span class="hljs-string">&quot;$child_comments.author.role&quot;</span>],<br>					&#125;,<br>					then: <span class="hljs-string">&quot;$child_comments&quot;</span>,<br>				&#125;,<br>				],<br>			<span class="hljs-keyword">default</span>:<br>				[],<br>			&#125;,<br>		&#125;,<br>	&#125;,<br>&#125;,<br></code></pre></td></tr></table></figure>
+这样就能得到我想要的结构了，我们测试一下<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs js">[<br>  &#123;<br>    <span class="hljs-string">&quot;_id&quot;</span>: ObjectId(<span class="hljs-string">&quot;5a934e000102030405000001&quot;</span>),<br>    <span class="hljs-string">&quot;child_comments&quot;</span>: [<br>      &#123;<br>        <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>          <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;author&quot;</span>,<br>          <span class="hljs-string">&quot;user&quot;</span>: [<br>            &#123;<br>              <span class="hljs-string">&quot;_id&quot;</span>: ObjectId(<span class="hljs-string">&quot;5a934e000102030405000003&quot;</span>),<br>              <span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;frmachao@126.com&quot;</span>,<br>              <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-string">&quot;user1&quot;</span>,<br>              <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;frmachao&quot;</span><br>            &#125;<br>          ]<br>        &#125;<br>      &#125;<br>    ],<br>    <span class="hljs-string">&quot;child_total&quot;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&quot;datumID&quot;</span>: <span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&quot;html&quot;</span>: <span class="hljs-string">&quot;这是父评论1&quot;</span><br>  &#125;,<br>  &#123;<br>    <span class="hljs-string">&quot;_id&quot;</span>: ObjectId(<span class="hljs-string">&quot;5a934e000102030405000002&quot;</span>),<br>    <span class="hljs-string">&quot;child_comments&quot;</span>: [],<br>    <span class="hljs-string">&quot;child_total&quot;</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-string">&quot;datumID&quot;</span>: <span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&quot;html&quot;</span>: <span class="hljs-string">&quot;这是父评论2&quot;</span><br>  &#125;<br>]<br></code></pre></td></tr></table></figure>
+附上演示地址：<a target="_blank" rel="noopener" href="https://mongoplayground.net/p/RkZ2FNWbJl8">MongoDB playground</a></li>
+</ol>
+<h2 id="前端评论框实现"><a href="#前端评论框实现" class="headerlink" title="前端评论框实现"></a>前端评论框实现</h2><ul>
+<li>Ant Design<ul>
+<li>Comment 组件</li>
+<li>Pagination 组件</li>
+<li>Popconfirm 组件</li>
+<li>Form 组件</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/dD1EER.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="dD1EER"></p>
+<ul>
+<li>markdown-it Markdown 解析器<ul>
+<li>精简版 Markdown 不支持 htm 标签解析<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> mdParserComment = MarkdownIt(&#123;<br>    html: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 不支持html嵌套</span><br>    linkify: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 支持url生成a链接</span><br>    typographer: <span class="hljs-literal">true</span>,<br>    highlight: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">str, lang</span>) </span>&#123;<br>        <span class="hljs-keyword">if</span> (lang &amp;&amp; hljs.getLanguage(lang)) &#123;<br>            <span class="hljs-keyword">return</span> hljs.highlight(str, &#123; <span class="hljs-attr">language</span>: lang &#125;).value;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>; <span class="hljs-comment">// use external default escaping</span><br>    &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2></li>
+</ul>
+</li>
+</ul>
+<p>我的<a target="_blank" rel="noopener" href="http://101.132.140.62/">个人网站</a>–》<a target="_blank" rel="noopener" href="http://101.132.140.62/datum">知拾</a>—》<a target="_blank" rel="noopener" href="http://101.132.140.62/datum/view?id=6131aa762237bc57827adaf5">评论</a> 欢迎大家使用。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/zpqm2H.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="zpqm2H"></p>
+
+                  </div>
+                  <!-- Custom -->
+                  
+                    <div class="col-lg-7 mx-auto nopadding-x-md">
+                      <div class="container custom post-custom mx-auto">
+                        <img src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/weChat.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="margin-top:0">
+                      </div>
+                    </div>
+                    
+                      <!-- Custom End -->
+                      <hr>
+                      <div>
+                        <div class="post-metas mb-3">
+                          
+                            <div class="post-meta mr-3">
+                              <i class="iconfont icon-category"></i>
+                              
+                                <a class="hover-with-bg" href="/categories/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/">
+                                  代码人生
+                                </a>
+                                
+                            </div>
+                            
+                              
+                                <div class="post-meta">
+                                  <i class="iconfont icon-tags"></i>
+                                  
+                                    <a class="hover-with-bg" href="/tags/nodejs/">
+                                      nodejs
+                                    </a>
+                                    
+                                    <a class="hover-with-bg" href="/tags/mongodb/">
+                                      mongodb
+                                    </a>
+                                    
+                                </div>
+                                
+                        </div>
+                        
+                          <p class="note note-warning">
+                            
+                                  本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                                    
+                          </p>
+                          
+                            
+                              <div class="post-prevnext">
+                                <article class="post-prev col-6">
+                                  
+                                    
+                                      <a href="/posts/6d9a362d/">
+                                        <i class="iconfont icon-arrowleft"></i>
+                                        <span class="hidden-mobile">
+                                          配置阿里云轻量应用服务器实现全站HTTPS访问
+                                        </span>
+                                        <span class="visible-mobile">
+                                          上一篇
+                                        </span>
+                                      </a>
+                                      
+                                </article>
+                                <article class="post-next col-6">
+                                  
+                                    
+                                      <a href="/posts/7d83f8b4/">
+                                        <span class="hidden-mobile">
+                                          mongodb 查询嵌入式文档数组比较某项字段的值
+                                        </span>
+                                        <span class="visible-mobile">
+                                          下一篇
+                                        </span>
+                                        <i class="iconfont icon-arrowright"></i>
+                                      </a>
+                                      
+                                </article>
+                              </div>
+                              
+                      </div>
+                      <!-- AddToAny BEGIN -->
+                      <hr>
+                      <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                        <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+                        <a class="a2a_button_facebook"></a>
+                        <a class="a2a_button_twitter"></a>
+                        <a class="a2a_button_email"></a>
+                        <a class="a2a_button_douban"></a>
+                        <a class="a2a_button_wechat"></a>
+                        <a class="a2a_button_evernote"></a>
+                      </div>
+                      <script async src="https://static.addtoany.com/menu/page.js"></script>
+                      <!-- AddToAny END -->
+
+                      
+                        <!-- Comments -->
+                        <article class="comments" id="comments" lazyload>
+                          
+                                
+                                  
+                                    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.lazyComments('gitalk-container', function() {
+      Fluid.utils.createCssLink('https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '8fe50a1dda359f9a0967',
+          clientSecret: '89f3f6eda29f3b3b279655e336afc0528b525107',
+          repo: 'frmachao.github.io',
+          owner: 'frmachao',
+          admin: ["frmachao"],
+          id: 'a8f15c6ce6f2a43ad3e6eaf20990ee29',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false,
+          proxy: 'cors.uiisp.top/?https://github.com/login/oauth/access_token'
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+                        </article>
+                        
+            </article>
+          </div>
+        </div>
+      </div>
+      
+        <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+          <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+        </div>
+        
+    </div>
+  </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <span>© 2021 </span> <a href="https://blog.frmachao.top" target="_blank" rel="nofollow noopener"><span>Frmachao</span></a> <a  href="https://github.com/frmachao/frmachao.github.io"  class="iconfont icon-github-fill" target="_blank" style="font-size: 1.5rem" > </a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/duration.min.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/debouncer.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/events.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/plugins.min.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/img-lazyload.min.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/leancloud.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/local-search.min.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4ceed7fff81f6ddb070e16f3e8f21c10";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/boot.min.js" ></script>
+
+
+</body>
+</html>

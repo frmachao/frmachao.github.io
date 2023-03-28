@@ -1,0 +1,1022 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="frmachao">
+  <meta name="keywords" content="">
+  
+  <title>frmachao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/css/main.min.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.frmachao.top","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"4ceed7fff81f6ddb070e16f3e8f21c10","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"GRh8dqRnhxkFl3vljLmgu9OU-gzGzoHsz","app_key":"F0tYf54R2Yb9hmohCo08A8l6","server_url":null}}};
+  </script>
+  <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/utils.min.js" ></script>
+  <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/color-schema.min.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="frmachao's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>frmachao's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/atom.xml" target="_blank">
+                <i class="iconfont icon-rss-fill"></i>
+                RSS
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/06.04.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="生活就像故事，谁会记得过程呢？">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/210b5058/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2021-11-09-WmerG5.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="阅读笔记《javaScript DOM 编程艺术》">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/210b5058/">阅读笔记《javaScript DOM 编程艺术》</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/210b5058/">
+          
+          
+            
+          
+          
+前言这是一本出版于2011年的技术书籍，书中的很多API 可能已经过时，现在有更好更便捷的 API。W3C的DOM标准是开发Web应用的基石，虽然我入行以来一直在用react/vue/angular 之类的前端框架编写web应用，已经不用直接操作 DOM，但浏览器页面还是 DOM 那套东西，加上书中编程艺术的思想，这些都是值得一读的。
+
+写于 2021/10/21
+
+什么是 DOM (Docum
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-09 22:05" pubdate>
+              2021-11-09
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%AC%94%E8%AE%B0%E6%9C%AC/">笔记本</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/1f723736/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2021-11-07-6xFP3P.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="观后感 纪录片《人格的真相》">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/1f723736/">观后感 纪录片《人格的真相》</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/1f723736/">
+          
+          
+            
+          
+          
+一项 1975 年的调查问卷内容：
+ 随着年龄的增长 你会变得越来越没用？
+ 随着你变老，情况是变好了还是和之前一样？
+
+上面问题的结果可能会影响你的寿命，通过对比参与实验的人群的死亡数据得出乐观的人要比悲观的人寿命长 7 年多
+心理学是门科学，不是玄学实验中用到了很多科学仪器：检测脑电活动
+科学证实左右脑功能是不同的：在不同的活动下，左右脑检测到的脑电活动不同
+意识会以物质的形式存在吗？我们常
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-07 15:23" pubdate>
+              2021-11-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%AC%94%E8%AE%B0%E6%9C%AC/">笔记本</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BA%AA%E5%BD%95%E7%89%87/">纪录片</a>
+            
+              <a href="/tags/%E8%A7%82%E7%82%B9%E6%84%9F%E6%83%B3/">观点感想</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/f2c957b0/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2021-11-07-dez79U.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="阅读笔记《最好的告别》">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/f2c957b0/">阅读笔记《最好的告别》</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/f2c957b0/">
+          
+          
+            
+          
+          
+什么时候应该放弃治疗姑息治疗，应该减少医学治疗 ，增加医学护理，尝试新的安宁缓和医疗模式（通过关怀与抚慰的手段），善终服务就是姑息治疗，就是通过给予相应的照料帮助病人处理这些困难。
+一个国家医疗发展的阶段：
+
+国家极度贫困，没有医疗条件，只能在家等死
+经济发展 公共卫生医疗条件提升，在医院去世
+经济物质高度发达，开始注重生命的质量，居家离世变多。参考美国
+
+三种医患关系：
+家长型：我们是医学权威
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-07 10:39" pubdate>
+              2021-11-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%AC%94%E8%AE%B0%E6%9C%AC/">笔记本</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%A7%82%E7%82%B9%E6%84%9F%E6%83%B3/">观点感想</a>
+            
+              <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/1de4d68a/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2021-11-07-WRZ1HA.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="第一次全栈开发总结">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/1de4d68a/">第一次全栈开发总结</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/1de4d68a/">
+          
+          
+            
+          
+          [toc]
+前言在 2020 年 5 月，也就是我参加 web 前端工作的第三个年头。当时我刚离职不久，手头上存了一些钱想着做点自己想做的事，去他妈的工作。当时恰逢疫情，远方肯定是去不了，于是就开始学着拍些视频，跟着 FreeCodeCamp 学些服务端开发的课程。虽然做开发工作三年了，但一直做 web 前端,对服务端开发不了解，在公司里就像是被用调用的资源，给需求吐页面，像下蛋母鸡一般(母鸡与前
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-07 09:56" pubdate>
+              2021-11-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/">代码人生</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%B0%E5%BD%95/">记录</a>
+            
+              <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/">全栈开发</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/6d9a362d/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/DUyX5S.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="配置阿里云轻量应用服务器实现全站HTTPS访问">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/6d9a362d/">配置阿里云轻量应用服务器实现全站HTTPS访问</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/6d9a362d/">
+          
+          
+            
+          
+          [toc]
+前言前段时间，我写了一个基于React+Express+MongoDB的个人网站 www.frmachao.top，现在要给它加上 ssl 证书，来实现全站https访问。
+证书购买免费的证书服务阿里云盾证书服务
+
+注意： 单域名表示要申请的证书用于绑定1个具体域名（例如，只绑定www.frmachao.top）
+
+
+创建证书并进行证书申请操作
+填写申请信息 并验证 DNS 信息
+
+注
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-26 16:26" pubdate>
+              2021-09-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/">代码人生</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+            
+              <a href="/tags/https/">https</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/62bfed46/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/D1Mb51.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="网站评论模块 mongodb 字段设计及实现">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/62bfed46/">网站评论模块 mongodb 字段设计及实现</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/62bfed46/">
+          
+          
+            
+          
+          [toc]
+前言前段时间，我写了一个基于React+Express+MongoDB的个人网站。http://101.132.140.62/，网站上有个叫做 知拾 的单页面应用，它主要是一个知识库类型的应用，人人都可以往里面记录自己认为有用的知识。
+
+现在我想要添加对知识的评论功能
+
+项目开发环境
+MongoDB 4.4.8
+Express 4.17.1
+React 16.13.1
+
+知拾应用评论区
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-26 14:25" pubdate>
+              2021-09-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/">代码人生</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/nodejs/">nodejs</a>
+            
+              <a href="/tags/mongodb/">mongodb</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/7d83f8b4/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/1n290H.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="mongodb 查询嵌入式文档数组比较某项字段的值">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/7d83f8b4/">mongodb 查询嵌入式文档数组比较某项字段的值</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/7d83f8b4/">
+          
+          
+            
+          
+          [toc]
+问题描述现在我有一个这样的 mongodb 文档模型 Article
+author、group 这两个字段分别左外部联接 User和ArticleGroup两个集合
+
+我使用的是 mongoose 对象文档模型（ODM）库，集合名称都是大写的
+
+1234567891011121314151617181920212223242526const ArticleSchema = new mo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-06 14:35" pubdate>
+              2021-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/">代码人生</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/nodejs/">nodejs</a>
+            
+              <a href="/tags/mongodb/">mongodb</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/7c957dfb/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/D1Mb51.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="记录react+node+mongodb项目部署到服务器的过程">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/7c957dfb/">记录react+node+mongodb项目部署到服务器的过程</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/7c957dfb/">
+          
+          
+            
+          
+          [toc]
+前言我之前只做过web前端开发，对服务器相关的东西是纯小白，这篇文章仅用来记录学习。
+常用Linux命令12345678910111213cd 进入目录cd .. 返回上一个目录ls -a 查看当前目录mkdir abc 创建abc文件夹mv 移动或重命名rm 删除一个文件rm -rf 递归删除指定文件夹关机命令：shutdown或poweroffshutdown:shutdown -
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-06 13:14" pubdate>
+              2021-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/">代码人生</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E7%BD%B2/">服务端部署</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/df28a7c5/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/default.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="博客优化">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/df28a7c5/">博客优化</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/df28a7c5/">
+          
+          
+            
+          
+          安全性
+在页面控制台直接发起ajax会不会更改：文章的阅读数 与访问数？
+github issue 能否控制指定用户创建Issue？
+
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-24 14:36" pubdate>
+              2021-08-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%AC%94%E8%AE%B0%E6%9C%AC/">笔记本</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/hexo/">hexo</a>
+            
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/">博客</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/9d3837ea/" target="_self">
+          <img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/7Bhd5e.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="记录从食指伸肌腱手术后甲根长期感染不愈合到二次手术的过程">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/9d3837ea/">记录从食指伸肌腱手术后甲根长期感染不愈合到二次手术的过程</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/posts/9d3837ea/">
+          
+          
+            
+          
+          
+多图预警： 本文中含有大量手指流血感染的图片，可能会引起读者生理性不适
+
+先说个人结论：在人均医疗资源紧缺的背景下：大型医院的医生往往以手术为导向，对于不需要手术的病人，往往几句消毒注意卫生就打发走了病人，甚至没有体格检查这类会占用医生宝贵门诊时间的行为。
+时间线2021年3月份在四川成都的 四川现代医院 接受了食指伸肌腱键帽修复，3月5号手术，住院5天，术后石膏固定3天，然后换成支具固定。（3
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-24 14:18" pubdate>
+              2021-08-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%AC%94%E8%AE%B0%E6%9C%AC/">笔记本</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%81%A5%E5%BA%B7/">健康</a>
+            
+              <a href="/tags/%E6%89%8B%E6%9C%AF/">手术</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <span>© 2021 </span> <a href="https://blog.frmachao.top" target="_blank" rel="nofollow noopener"><span>Frmachao</span></a> <a  href="https://github.com/frmachao/frmachao.github.io"  class="iconfont icon-github-fill" target="_blank" style="font-size: 1.5rem" > </a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/duration.min.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/debouncer.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/events.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/plugins.min.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/img-lazyload.min.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/leancloud.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/local-search.min.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4ceed7fff81f6ddb070e16f3e8f21c10";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/js/boot.min.js" ></script>
+
+
+</body>
+</html>

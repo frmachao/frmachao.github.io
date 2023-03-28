@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/
+Allow: /about/
+Allow: /links/
+Sitemap: https://blog.frmachao.top/sitemap.xml
+Sitemap: https://blog.frmachao.top/baidusitemap.xml
