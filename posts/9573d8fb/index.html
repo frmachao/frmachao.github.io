@@ -215,7 +215,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.7k 字
+      1.8k 字
     </span>
   
 
@@ -225,7 +225,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      21
+      23
        分钟
     </span>
   
@@ -270,7 +270,7 @@
                 <p class="note note-info">
                   
                           本文最后更新于：
-                            2022年10月10日 下午
+                            2023年4月9日 上午
                               
                 </p>
                 
@@ -309,23 +309,25 @@
 <p>2021.03.03 Gitalk 作者发布了更新</p>
 </blockquote>
 <p><code>Gitalk</code> 更新版本到 1.7.2 或者修改配置增加 proxy: ‘<a target="_blank" rel="noopener" href="https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token&#39;">https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token&#39;</a></p>
-<p>后面尝试自己搭建代 cors proxy 服务</p>
+<p>后面自己搭建了 cors 服务，参考: <a target="_blank" rel="noopener" href="https://lanyundev.com/posts/1f7efefb">https://lanyundev.com/posts/1f7efefb</a></p>
 <h3 id="Gitalk-原理"><a href="#Gitalk-原理" class="headerlink" title="Gitalk 原理"></a>Gitalk 原理</h3><p>在静态博客中使用评论功能，文章的唯一标示就是页面的<code>location.href</code> 即 url ,gitalk 将 这个唯一标识 作为 issue 的 label 与文章关联，每篇文章对应一个 Issue</p>
 <p><code>fluid主题</code> 里集成 Gitalk 插件时多处理了一步 在 <code>gitalk.ejs</code> 里做了 md5 加密，加密后的值就是 issue 的 label</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> gitalk = <span class="hljs-keyword">new</span> Gitalk(&#123;<br>  clientID: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.clientID %&gt;&#x27;</span>,<br>  clientSecret: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.clientSecret %&gt;&#x27;</span>,<br>  repo: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.repo %&gt;&#x27;</span>,<br>  owner: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.owner %&gt;&#x27;</span>,<br>  admin: &lt;%- <span class="hljs-built_in">JSON</span>.stringify(theme.gitalk.admin || []) %&gt;,<br>  id: <span class="hljs-string">&#x27;&lt;%= md5(page.path) %&gt;&#x27;</span>, <span class="hljs-comment">// 这里做了md5 加密</span><br>  language: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.language %&gt;&#x27;</span>,<br>  labels: &lt;%- <span class="hljs-built_in">JSON</span>.stringify(theme.gitalk.labels || []) %&gt;,<br>  perPage: &lt;%= theme.gitalk.perPage %&gt;,<br>  pagerDirection: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.pagerDirection %&gt;&#x27;</span>,<br>  createIssueManually: &lt;%= theme.gitalk.createIssueManually %&gt;,<br>  distractionFreeMode: &lt;%= theme.gitalk.distractionFreeMode %&gt;,<br>  proxy: <span class="hljs-string">&#x27;&lt;%= theme.gitalk.proxy %&gt;&#x27;</span><br>&#125;);<br></code></pre></td></tr></table></figure>
 
-<p><code>page.path</code> :page 是 hexo 中提供的变量，page.path 是页面网址（不含根路径）<br>比如 <code>https://blog.frmachao.top/2021/03/一个博客/</code>这个页面取 page.path 的值就是 <code>2021/03/一个博客/</code></p>
-<p>加密后的 32 位 MD5：<code>7c1b02acefaf2d82e0f553cb54de19d8</code><br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/Q5u4nh6MHHtV.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="Q5u4nh6MHHtV"></p>
+<p><code>page.path</code> :page 是 hexo 中提供的变量，page.path 是页面网址（不含根路径）<br>比如 <code>https://blog.frmachao.top/posts/9573d8fb/</code>这个页面取 page.path 的值就是 <code>posts/9573d8fb/</code></p>
+<p>加密后的 32 位 MD5：<code>f43773bc09059051be6825b5c9006f58</code><br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2023-04-09-FPGr4k.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="2023-04-09-FPGr4k"></p>
 <p><code>https://blog.frmachao.top/links/</code><br>非文章页面取 page.path 的值就是 —&gt; <code>links/index.html </code></p>
 <p>加密后的 32 位 MD5：<code>38687fdbcd50268b872dd8c493f739e6</code><br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/wYtVZti7RfqJ.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="wYtVZti7RfqJ"></p>
 <p><code>注意⚠️</code>: page.path 取到的 url 路径是 url 解码过的</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">2021/03/%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/ <span class="hljs-comment"># url编码</span><br>2021/03/一个博客/  <span class="hljs-comment"># url解码</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="图床"><a href="#图床" class="headerlink" title="图床"></a>图床</h2><blockquote>
-<p>目前是白嫖的 gitee 仓库</p>
+<p>目前使用 github 仓库 作为图床</p>
 </blockquote>
-<p>使用 <code>github</code>仓库做图床不稳定(githubusercontent 在国内经常被墙),暂时用码云的仓库做图床</p>
+<p>使用 <code>github</code>仓库做图床，利用 public repo 提供的免费 jsdelivr CDN </p>
 <ul>
+<li>仓库地址： <a target="_blank" rel="noopener" href="https://github.com/frmachao/images">https://github.com/frmachao/images</a></li>
+<li>图片链接： <a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2023-04-05-5xznzZ.png">https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2023-04-05-5xznzZ.png</a></li>
 <li><a target="_blank" rel="noopener" href="http://ping.chinaz.com/raw.githubusercontent.com">ping 检测 raw.githubusercontent.com 在国内的状态</a></li>
 </ul>
 <h2 id="网站统计插件"><a href="#网站统计插件" class="headerlink" title="网站统计插件"></a>网站统计插件</h2><ul>
@@ -349,8 +351,14 @@ src="//player.bilibili.com/player.html?aid=1623152&bvid=BV1Gx411P7GJ&cid=2467718
 
 <blockquote><p>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</p>
 <footer><strong>David Levithan</strong><cite>Wide Awake</cite></footer></blockquote>
-
-<h2 id="hexo-常用命令"><a href="#hexo-常用命令" class="headerlink" title="hexo 常用命令"></a>hexo 常用命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo n <span class="hljs-string">&quot;我的博客&quot;</span> == hexo new <span class="hljs-string">&quot;我的博客&quot;</span> <span class="hljs-comment">#新建文章</span><br>hexo new draft &lt;title&gt; <span class="hljs-comment"># 新建草稿</span><br>hexo p == hexo publish<br>hexo g == hexo generate<span class="hljs-comment">#生成</span><br>hexo s == hexo server <span class="hljs-comment">#启动服务预览</span><br>hexo d == hexo deploy<span class="hljs-comment">#部署</span><br>hexo server <span class="hljs-comment">#Hexo 会监视文件变动并自动更新，您无须重启服务器。</span><br>hexo server -s <span class="hljs-comment">#静态模式</span><br>hexo s --draft <span class="hljs-comment"># 编译草稿</span><br>hexo server -p 5000 <span class="hljs-comment">#更改端口</span><br>hexo server -i 192.168.1.1 <span class="hljs-comment">#自定义 IP</span><br>hexo clean <span class="hljs-comment">#清除缓存 网页正常情况下可以忽略此条命令</span><br>hexo g <span class="hljs-comment">#生成静态网页</span><br>hexo d <span class="hljs-comment">#开始部署</span><br><br></code></pre></td></tr></table></figure>
+<h2 id="hexo-插件"><a href="#hexo-插件" class="headerlink" title="hexo 插件"></a>hexo 插件</h2><ul>
+<li>hexo-abbrlink 生成唯一永久的文章链接<ul>
+<li>hexo 文章链接默认的生成规则是：:year/:month/:day/:title，是按照年、月、日、标题来生成的。</li>
+<li>这个插件可以生成不变的文章链接，不会随着文章标题变动，原理是在文章的 md 文件中新增一个 abbrlink 字段<h2 id="hexo-常用命令"><a href="#hexo-常用命令" class="headerlink" title="hexo 常用命令"></a>hexo 常用命令</h2></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo n <span class="hljs-string">&quot;我的博客&quot;</span> == hexo new <span class="hljs-string">&quot;我的博客&quot;</span> <span class="hljs-comment">#新建文章</span><br>hexo new draft &lt;title&gt; <span class="hljs-comment"># 新建草稿</span><br>hexo p == hexo publish<br>hexo g == hexo generate<span class="hljs-comment">#生成</span><br>hexo s == hexo server <span class="hljs-comment">#启动服务预览</span><br>hexo d == hexo deploy<span class="hljs-comment">#部署</span><br>hexo server <span class="hljs-comment">#Hexo 会监视文件变动并自动更新，您无须重启服务器。</span><br>hexo server -s <span class="hljs-comment">#静态模式</span><br>hexo s --draft <span class="hljs-comment"># 编译草稿</span><br>hexo server -p 5000 <span class="hljs-comment">#更改端口</span><br>hexo server -i 192.168.1.1 <span class="hljs-comment">#自定义 IP</span><br>hexo clean <span class="hljs-comment">#清除缓存 网页正常情况下可以忽略此条命令</span><br>hexo g <span class="hljs-comment">#生成静态网页</span><br>hexo d <span class="hljs-comment">#开始部署</span><br><br></code></pre></td></tr></table></figure>
 <h2 id="博客的托管"><a href="#博客的托管" class="headerlink" title="博客的托管"></a>博客的托管</h2><p>hexo 博客源码本身存储在 github 上的一个私有仓库 <code>https://github.com/frmachao/hexo-blog</code>,原始的markdown 文章与草稿 hexo 博客主题配置等等都在这里</p>
 <p>当编辑完文章后通过 <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a> 这个插件 将hexo 编译出来的 HTML 页面推送到开启 <code>Github Pages</code>静态页面服务的公开仓库中 <code>https://github.com/frmachao/frmachao.github.io</code></p>
 <p>后来觉得手动在本地执行编译 + 推送到静态页面服务仓库麻烦，于是利用 GitHub Actions 自动部署 Hexo 博客<br>参考 ： <a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/posts/actions-deploy/">利用 GitHub Actions 自动部署 Hexo 博客</a></p>

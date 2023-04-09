@@ -18,7 +18,7 @@
   <meta name="author" content="frmachao">
   <meta name="keywords" content="">
   
-  <title>阅读笔记《javaScript DOM 编程艺术》 - frmachao&#39;s blog</title>
+  <title>阅读笔记《区块链技术与应用》 - frmachao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -183,12 +183,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2021-11-09-WmerG5.jpg') no-repeat center center;
+         style="background: url('https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2023-04-09-kXSIKX.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="阅读笔记《javaScript DOM 编程艺术》">
+            <span class="h2" id="subtitle" title="阅读笔记《区块链技术与应用》">
               
             </span>
 
@@ -203,8 +203,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-11-09 22:05" pubdate>
-        2021年11月9日 晚上
+      <time datetime="2023-04-09 10:18" pubdate>
+        2023年4月9日 上午
       </time>
     </span>
   
@@ -215,7 +215,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      518 字
     </span>
   
 
@@ -225,7 +225,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      19
+      5
        分钟
     </span>
   
@@ -264,91 +264,36 @@
             <article class="post-content mx-auto">
               <!-- SEO header -->
               <h1 style="display: none">
-                阅读笔记《javaScript DOM 编程艺术》
+                阅读笔记《区块链技术与应用》
               </h1>
               
                 <p class="note note-info">
                   
                           本文最后更新于：
-                            2022年10月10日 下午
+                            2023年4月9日 上午
                               
                 </p>
                 
                   <div class="markdown-body">
-                    <p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2021-11-09-WmerG5.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="2021-11-09-WmerG5"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是一本出版于<code>2011</code>年的技术书籍，书中的很多<code>API</code> 可能已经过时，现在有更好更便捷的 API。<code>W3C</code>的<code>DOM标准</code>是开发<code>Web</code>应用的基石，虽然我入行以来一直在用<code>react/vue/angular</code> 之类的前端框架编写<code>web</code>应用，已经不用直接操作 DOM，但浏览器页面还是 DOM 那套东西，加上书中编程艺术的思想，这些都是值得一读的。</p>
-<blockquote>
-<p>写于 2021/10/21</p>
-</blockquote>
-<h2 id="什么是-DOM-Document-Object-Model"><a href="#什么是-DOM-Document-Object-Model" class="headerlink" title="什么是 DOM (Document Object Model)"></a>什么是 DOM (Document Object Model)</h2><p>DOM 本质时一种 API(应用编程接口)。简单地来说，API 就是一组已经得到有关各方共同认可的基本约定。现实世界中，相当于 API 的例子包括摩尔斯码、国际时区；</p>
-<p>在软件编程领域，虽然存在着多种不同的语言，但很多任务却是相同或相似的。这也正是人们需要 API 的原因。一旦掌握了某个标准，就可以把它应用在许多不同的环境中。虽然语法会因为使用的程序设计语言而有所变化，但这些约定却总是保持不变的。</p>
-<p>DOM 是一种适用于多种环境和多种，程序设计语言的通用型 API</p>
-<blockquote>
-<p>tips: 在标准化 DOM 出现前给 20 世纪 90 年代后期的程序员们造成痛苦回忆的 “DHTML”.<br>“DHTML 是“Dynamic HTML”（动态 HTML）的简称。DHTML 并不是一项新技术，而是描述 HTML、CSS 和 JavaScript 技术组合的术语。”</p>
-</blockquote>
-<p>DOM 把文档表示为一棵树</p>
-<p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/wejP2v.png" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="wejP2v"></p>
-<p>根元素就是<code>html</code>。</p>
-<p>第二层是 <code>head</code> 和 <code>body</code> ，他们是平级元素。<code>head</code>有两个子元素 ：<code>meta</code> 和 <code>title</code>。<code>body</code>下面就是我们日常编写的 html 元素了</p>
-<p>DOM 是由节点构成的集合，元素节点、文本节点、属性节点：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;balbal..&quot;</span>&gt;</span>文本内容...<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>p 标签就是元素节点，<code>&lt;p&gt;xxxx&lt;/p&gt;</code> 元素中的文本就是文本节点，<code>title</code>就是属性节点</p>
-<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><blockquote>
-<p>css（层叠样式表）,告诉浏览器如何显示一份文档的内容。</p>
-</blockquote>
-<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>继承 （inheritance）是 CSS 技术中的一项强大功能。类似于 DOM，CSS 也把文档的内容视为一棵节点树。节点树上的各个元素将继承其父元素的样式属性。</p>
-<p>例如，如果我们为 body 元素定义了一些颜色或字体，包含在 body 元素里的所有元素都将自动获得那些样式：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span> &#123;<br>  <span class="hljs-attribute">color</span>: white;<br>  <span class="hljs-attribute">background-color</span>: black;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>这些颜色将不仅作用于那些直接包含在<body>标签里的内容，还将作用于嵌套在 body 元素内部的所有元素</p>
-<h2 id="获取元素"><a href="#获取元素" class="headerlink" title="获取元素"></a>获取元素</h2><p>这本书出版于 2011 年，那时的 dom 操作 获取元素的方式只有三种</p>
+                    <p>[toc]</p>
+<h2 id="密码学原理"><a href="#密码学原理" class="headerlink" title="密码学原理"></a>密码学原理</h2><h3 id="比特币中-Hash-算法的特性"><a href="#比特币中-Hash-算法的特性" class="headerlink" title="比特币中 Hash 算法的特性"></a>比特币中 Hash 算法的特性</h3><ul>
+<li>hash collision resistance 哈希碰撞💥  x≠y ,H(x)=H(y) 像这样 两个不同的输入算出的hash 值是相等的，这就是hash 碰撞</li>
+<li>hiding  x—&gt;H(x) 输入到输出是不可逆的</li>
+</ul>
+<p>digital commitment  sealed envelope</p>
+<p>现实中的例子：预测结果提前公布了，会影响结果，sealed envelope 就是找一个可信的地方存起来预测结果，等次日结果出来后，对比是不是预测对了。</p>
+<p>数字中的例子就是 hash 函数加密，因为不可逆性 和 不可人为哈希碰撞性。   </p>
 <ul>
-<li>document.getElementById 通过元素 ID 获取，返回一个对象</li>
-<li>document.getElementsByTagName 通过标签名获取，返回一个对象数组</li>
-<li>document.getElementsByClassName 通过类名获取，返回一个对象数组</li>
+<li>puzzle friendly  hash 值的计算是不可预测的，比如产生 000…xx..x 这样的hash 值，实现并不知道什么样的输入更有可能算出这样的hash 值</li>
 </ul>
-<h2 id="获取和设置属性"><a href="#获取和设置属性" class="headerlink" title="获取和设置属性"></a>获取和设置属性</h2><ul>
-<li>getAttribute 获取文档属性</li>
-<li>setAttribute 设置文档属性 element.setAttribute(attributename,attributevalue)</li>
+<p>H(block header) ≤ target (符合要求的hash) 挖矿就是算出这个 nonce，挖矿很难其他人验证这个 nonce 是不是符合要求却很容易。</p>
+<p>SHA-256 比特币中用的 Hash 算法</p>
+<h3 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h3><ul>
+<li>非对称加密  对称加密 通过 一个encyption 来验证，但是需要安全的环境，不然 密钥泄露就能解析出信息。  于是 就有了 public key, private key  公钥和私钥 这种<code>非对称加密设计</code>出现。  非对称加密就是加密和解密使用的不是相同的密钥：只有同一个公钥-私钥对才能正常加解密。  因此，如果小明要加密一个文件发送给小红，他应该首先向小红索取她的公钥，然后，他用小红的公钥加密，把加密文件发送给小红，此文件只能由小红的私钥解开，因为小红的私钥在她自己手里，所以，除了小红，没有任何人能解开此文件。  电子钱包里就是本地产生一个私钥</li>
 </ul>
-<p>这俩方法不属于 document 对象，只能通过元素节点对象调用</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">var</span> paras = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">&quot;p&quot;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt; paras.length; i++) &#123;<br>  <span class="hljs-keyword">var</span> title_text = paras[i].getAttribute(<span class="hljs-string">&quot;title&quot;</span>);<br>  <span class="hljs-keyword">if</span> (title_text) &#123;<br>    paras[i].setAttribute(<span class="hljs-string">&quot;title&quot;</span>,<span class="hljs-string">&quot;brand new title text&quot;</span>);<br>    alert(paras[i].getAttribute(<span class="hljs-string">&quot;title&quot;</span>));<br>  &#125;<br>&#125;<br>摘录来自: Jeremy Keith. “JavaScript DOM编程艺术(第<span class="hljs-number">2</span>版)（图灵图书)<br></code></pre></td></tr></table></figure>
-
-<h2 id="一个案例：web-图片库"><a href="#一个案例：web-图片库" class="headerlink" title="一个案例：web 图片库"></a>一个案例：web 图片库</h2><ol>
-<li>学习如何利用<code>DOM</code>提供的方法去编写脚本</li>
-<li>学习如何利用事件处理函数把<code>JavaScript</code>代码与网页集成在一起</li>
-</ol>
-<p>介绍了 <code>DOM</code> 提供的几个新属性:</p>
-<ul>
-<li>childNodes</li>
-<li>nodeType 获取或设置元素文本值</li>
-<li>nodeValue 获取节点类型</li>
-<li>firstChild childNodes 中的第一个元素</li>
-<li>lastChild childNodes 中最后一个元素</li>
-</ul>
-<p>其中 nodeType 属性可以获取节点类型。nodetype 属性总共有 12 种可取值，但其中仅有 3 种具有实用价值。</p>
-<ul>
-<li>元素节点的 nodeType 属性值是 1</li>
-<li>属性节点的 nodeType 属性值是 2</li>
-<li>文本节点的 nodeType 属性值是 3</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showPic</span>(<span class="hljs-params">whichpic</span>) </span>&#123;<br>  <span class="hljs-comment">// 获取传入元素的属性</span><br>  <span class="hljs-keyword">var</span> source = whichpic.getAttribute(<span class="hljs-string">&quot;href&quot;</span>);<br>  <span class="hljs-comment">// 获取占位图</span><br>  <span class="hljs-keyword">var</span> placeholder = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;placeholder&quot;</span>);<br>  <span class="hljs-comment">// 更改img元素的src属性 来到达切换图片显示</span><br>  placeholder.setAttribute(<span class="hljs-string">&quot;src&quot;</span>, source);<br>  <span class="hljs-keyword">var</span> text = whichpic.getAttribute(<span class="hljs-string">&quot;title&quot;</span>);<br>  <span class="hljs-keyword">var</span> description = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;description&quot;</span>);<br>  <span class="hljs-comment">// 更改文本节点的值</span><br>  description.firstChild.nodeValue = text;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>事件处理函数的工作机制。在给某个元素添加了事件处理函数后，一旦事件发生，相应的 JavaScript 代码就会得到执行。</p>
-<p>被调用的 JavaScript 代码可以返回一个值，这个值将被传递给那个事件处理函数。<br>例如，我们可以给某个链接添加一个 onclick 事件处理函数，并让这个处理函数所触发的 JavaScript 代码返回布尔值 true 或 false 。</p>
-<p>这样一来，当这个链接被点击时，如果那段 JavaScript 代码返回的值是 true ，onclick 事件处理函数就认为“这个链接被点击了”；</p>
-<p>反之，如果返回的值是 false ，onclick 事件处理函数就认为“这个链接没有被点击”。</p>
-<p>给<code>a</code>标签的 onclick 事件添加<code>return false</code> 就可以阻止<code>a</code>标签点击跳转链接的默认行为</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- “使用this 关键字。这个关键字在这儿的含义是“这个对象”。具体到当前的例子，this 表示“这个&lt;a&gt; 元素节点”” --&gt;</span><br>  &lt;a<br>    onclick=&quot;showPic(this);return false;&quot;<br>    href=&quot;https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/4nnHSd.jpg&quot;<br>    title=&quot;A fireworks display&quot;<br>  &gt;<br>    Fireworks<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ul>
-<li>平稳退化，禁用 javascript? 2021 年现在谁还关心这个，禁用 js 是吧网站直接不让使用</li>
-</ul>
-<h3 id="“javascript-”伪协议"><a href="#“javascript-”伪协议" class="headerlink" title="“javascript:”伪协议"></a>“javascript:”伪协议</h3><blockquote>
-<p>“真”协议用来在因特网上的计算机之间传输数据包，如 HTTP 协议（http://）、FTP 协议（ftp://）等，伪协议则是一种非标准化的协议。“javascript:”伪协议让我们通过一个链接来调用 JavaScript 函数。</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">popUp</span>(<span class="hljs-params">winURL</span>) </span>&#123;<br>  <span class="hljs-built_in">window</span>.open(winURL,<span class="hljs-string">&quot;popup&quot;</span>,<span class="hljs-string">&quot;width=320,height=480&quot;</span>);<br>&#125;<br>&lt;a href=<span class="hljs-string">&quot;javascript:popUp(&#x27;http://www.example.com/&#x27;);&quot;</span>&gt;Example&lt;/a&gt;<br><span class="hljs-comment">// 内嵌处理函数的方式调用</span><br>&lt;a href=<span class="hljs-string">&quot;#&quot;</span> onclick=<span class="hljs-string">&quot;popUp(&#x27;http://www.example.com/&#x27;); return false;&quot;</span>&gt;Example&lt;/a&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="哈希指针-has-pointers"><a href="#哈希指针-has-pointers" class="headerlink" title="哈希指针 has pointers"></a>哈希指针 has pointers</h3><p>代替了普通的指针，区块链就是使用了哈希指针的链表</p>
+<p>tamper-evident log 记录</p>
+<h3 id="merkle-tree"><a href="#merkle-tree" class="headerlink" title="merkle tree"></a>merkle tree</h3><p><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2023-04-09-kXSIKX.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="merkle tree"><br>merkle proof 流程：<br><img src="https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/2023-04-09-zvOg2X.jpg" srcset="https://cdn.jsdelivr.net/gh/frmachao/frmachao.github.io@master/img/loading.gif" lazyload alt="zvOg2X"></p>
 
                   </div>
                   <!-- Custom -->
@@ -396,23 +341,13 @@
                                 <article class="post-prev col-6">
                                   
                                     
-                                      <a href="/posts/b1a85f07/">
-                                        <i class="iconfont icon-arrowleft"></i>
-                                        <span class="hidden-mobile">
-                                          阅读笔记《区块链技术与应用》
-                                        </span>
-                                        <span class="visible-mobile">
-                                          上一篇
-                                        </span>
-                                      </a>
-                                      
                                 </article>
                                 <article class="post-next col-6">
                                   
                                     
-                                      <a href="/posts/1f723736/">
+                                      <a href="/posts/210b5058/">
                                         <span class="hidden-mobile">
-                                          观后感 纪录片《人格的真相》
+                                          阅读笔记《javaScript DOM 编程艺术》
                                         </span>
                                         <span class="visible-mobile">
                                           下一篇
@@ -456,7 +391,7 @@
           repo: 'frmachao.github.io',
           owner: 'frmachao',
           admin: ["frmachao"],
-          id: 'b566bce94cefc6d7443334c98f59dda8',
+          id: '22a9c9ab21bde9a6232dc1d19afb092f',
           language: 'zh-CN',
           labels: ["Gitalk"],
           perPage: 10,
